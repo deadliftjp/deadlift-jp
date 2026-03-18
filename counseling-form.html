@@ -1,0 +1,1240 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DEADLIFT.JP｜コーチングカウンセリング</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Sans+JP:wght@300;400;500;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0c0c0f;
+  --surface: #13131a;
+  --surface2: #1a1a24;
+  --border: #252535;
+  --gold: #c9a84c;
+  --gold-light: #e8c97a;
+  --gold-dim: rgba(201,168,76,0.15);
+  --white: #f0ede8;
+  --gray: #7a7a8c;
+  --gray-light: #a0a0b0;
+  --red: #e05555;
+  --green: #4caf7d;
+  --accent: #3a3a5c;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  background: var(--bg);
+  color: var(--white);
+  font-family: 'Noto Sans JP', sans-serif;
+  font-weight: 300;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ===== BACKGROUND ===== */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 80% 50% at 20% 20%, rgba(201,168,76,0.04) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 80% at 80% 80%, rgba(58,58,92,0.15) 0%, transparent 60%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ===== TOPBAR ===== */
+.topbar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 56px;
+  background: rgba(12,12,15,0.95);
+  border-bottom: 1px solid var(--border);
+  backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 32px;
+  z-index: 100;
+}
+
+.logo {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 22px;
+  letter-spacing: 4px;
+  color: var(--white);
+}
+.logo span { color: var(--gold); }
+
+.topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-size: 11px;
+  color: var(--gray);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.status-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 8px var(--green);
+  animation: pulse 2s infinite;
+}
+@keyframes pulse {
+  0%,100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+/* ===== HERO ===== */
+.hero {
+  padding: 120px 0 60px;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+
+.hero-eyebrow {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 4px;
+  color: var(--gold);
+  margin-bottom: 20px;
+  text-transform: uppercase;
+}
+
+.hero-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(48px, 8vw, 96px);
+  letter-spacing: 6px;
+  line-height: 0.9;
+  color: var(--white);
+  margin-bottom: 24px;
+}
+.hero-title span { color: var(--gold); }
+
+.hero-subtitle {
+  font-size: 14px;
+  color: var(--gray-light);
+  letter-spacing: 1px;
+  line-height: 1.8;
+  max-width: 500px;
+  margin: 0 auto 48px;
+}
+
+.hero-divider {
+  width: 60px;
+  height: 1px;
+  background: var(--gold);
+  margin: 0 auto 48px;
+}
+
+/* ===== FORM CONTAINER ===== */
+.form-wrap {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 0 24px 120px;
+  position: relative;
+  z-index: 1;
+}
+
+/* ===== SECTION ===== */
+.section {
+  margin-bottom: 48px;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeUp 0.5s forwards;
+}
+.section:nth-child(1) { animation-delay: 0.1s; }
+.section:nth-child(2) { animation-delay: 0.2s; }
+.section:nth-child(3) { animation-delay: 0.3s; }
+.section:nth-child(4) { animation-delay: 0.4s; }
+.section:nth-child(5) { animation-delay: 0.5s; }
+.section:nth-child(6) { animation-delay: 0.6s; }
+.section:nth-child(7) { animation-delay: 0.7s; }
+.section:nth-child(8) { animation-delay: 0.8s; }
+
+@keyframes fadeUp {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border);
+}
+
+.section-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--gold);
+  letter-spacing: 2px;
+  background: var(--gold-dim);
+  border: 1px solid rgba(201,168,76,0.3);
+  padding: 4px 10px;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+.section-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 22px;
+  letter-spacing: 4px;
+  color: var(--white);
+}
+
+/* ===== GRID ===== */
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+
+@media (max-width: 600px) {
+  .grid-2, .grid-3 { grid-template-columns: 1fr; }
+}
+
+/* ===== FIELD ===== */
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.field-label {
+  font-size: 11px;
+  letter-spacing: 2px;
+  color: var(--gold);
+  text-transform: uppercase;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.field-label .req {
+  color: var(--red);
+  font-size: 14px;
+  line-height: 1;
+}
+
+.field-hint {
+  font-size: 11px;
+  color: var(--gray);
+  margin-top: -4px;
+  line-height: 1.6;
+}
+
+input[type="text"],
+input[type="number"],
+input[type="email"],
+input[type="date"],
+select,
+textarea {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--white);
+  font-family: 'Noto Sans JP', sans-serif;
+  font-size: 14px;
+  padding: 12px 16px;
+  border-radius: 4px;
+  outline: none;
+  transition: border-color 0.2s, background 0.2s;
+  width: 100%;
+}
+
+input:focus, select:focus, textarea:focus {
+  border-color: var(--gold);
+  background: var(--surface2);
+}
+
+input::placeholder, textarea::placeholder {
+  color: var(--gray);
+}
+
+select {
+  appearance: none;
+  cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23c9a84c' d='M6 8L0 0h12z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 16px center;
+  padding-right: 40px;
+}
+
+select option { background: #1a1a24; }
+
+textarea {
+  resize: vertical;
+  min-height: 100px;
+  line-height: 1.7;
+}
+
+/* ===== RADIO / CHECKBOX GROUP ===== */
+.choice-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.choice-item {
+  position: relative;
+}
+
+.choice-item input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.choice-item label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 13px;
+  color: var(--gray-light);
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.choice-item input:checked + label {
+  background: var(--gold-dim);
+  border-color: var(--gold);
+  color: var(--gold-light);
+}
+
+.choice-item label:hover {
+  border-color: rgba(201,168,76,0.4);
+  color: var(--white);
+}
+
+/* ===== INLINE UNIT INPUT ===== */
+.input-unit {
+  display: flex;
+  align-items: center;
+  gap: 0;
+}
+
+.input-unit input {
+  border-radius: 4px 0 0 4px;
+  flex: 1;
+}
+
+.unit-badge {
+  background: var(--accent);
+  border: 1px solid var(--border);
+  border-left: none;
+  color: var(--gray-light);
+  padding: 12px 14px;
+  font-size: 13px;
+  font-family: 'JetBrains Mono', monospace;
+  border-radius: 0 4px 4px 0;
+  white-space: nowrap;
+}
+
+/* ===== SBD BOX ===== */
+.sbd-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 2px;
+  border-radius: 6px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+
+.sbd-cell {
+  background: var(--surface);
+  padding: 20px 16px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.sbd-cell:not(:last-child) {
+  border-right: 1px solid var(--border);
+}
+
+.sbd-label {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 18px;
+  letter-spacing: 3px;
+  color: var(--gold);
+}
+
+.sbd-cell input {
+  background: var(--surface2);
+  border-color: transparent;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 20px;
+  font-weight: 700;
+  text-align: center;
+  padding: 10px;
+}
+
+.sbd-cell input:focus {
+  border-color: var(--gold);
+}
+
+/* ===== INJURY MATRIX ===== */
+.injury-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 10px;
+}
+
+/* ===== SLIDER ===== */
+.slider-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.slider-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  color: var(--gray);
+}
+
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 4px;
+  background: var(--border);
+  border-radius: 2px;
+  outline: none;
+  padding: 0;
+  border: none;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--gold);
+  cursor: pointer;
+  border: 2px solid var(--bg);
+  box-shadow: 0 0 8px rgba(201,168,76,0.4);
+}
+
+.slider-value {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--gold);
+  text-align: center;
+}
+
+/* ===== SUBMIT ===== */
+.submit-area {
+  margin-top: 56px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.btn-submit {
+  width: 100%;
+  max-width: 480px;
+  padding: 20px;
+  background: var(--gold);
+  color: #0c0c0f;
+  border: none;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 20px;
+  letter-spacing: 5px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: all 0.2s;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-submit::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(255,255,255,0);
+  transition: background 0.2s;
+}
+
+.btn-submit:hover::before {
+  background: rgba(255,255,255,0.1);
+}
+
+.btn-submit:active {
+  transform: scale(0.99);
+}
+
+.submit-note {
+  font-size: 12px;
+  color: var(--gray);
+  text-align: center;
+  line-height: 1.8;
+}
+
+/* ===== SUCCESS STATE ===== */
+.success-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(12,12,15,0.95);
+  z-index: 200;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 24px;
+  text-align: center;
+}
+
+.success-overlay.show {
+  display: flex;
+}
+
+.success-icon {
+  font-size: 56px;
+  line-height: 1;
+}
+
+.success-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 40px;
+  letter-spacing: 6px;
+  color: var(--gold);
+}
+
+.success-sub {
+  font-size: 14px;
+  color: var(--gray-light);
+  line-height: 1.8;
+  max-width: 400px;
+}
+
+/* ===== PROGRESS BAR ===== */
+.progress-bar {
+  position: fixed;
+  top: 56px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--border);
+  z-index: 99;
+}
+
+.progress-fill {
+  height: 100%;
+  background: var(--gold);
+  width: 0%;
+  transition: width 0.3s ease;
+}
+
+/* ===== DIVIDER ===== */
+.field-divider {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 8px 0;
+}
+
+/* ===== TAG INPUT ===== */
+.tag-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 10px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  min-height: 48px;
+  cursor: text;
+}
+
+.tag-wrap:focus-within {
+  border-color: var(--gold);
+}
+
+.tag {
+  background: var(--gold-dim);
+  border: 1px solid rgba(201,168,76,0.4);
+  color: var(--gold-light);
+  padding: 4px 10px;
+  border-radius: 3px;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.tag-remove {
+  cursor: pointer;
+  opacity: 0.6;
+  font-size: 14px;
+  line-height: 1;
+}
+
+.tag-remove:hover { opacity: 1; }
+
+.tag-input-inner {
+  border: none;
+  background: transparent;
+  color: var(--white);
+  font-size: 13px;
+  outline: none;
+  min-width: 120px;
+  flex: 1;
+}
+</style>
+</head>
+<body>
+
+<!-- Topbar -->
+<div class="topbar">
+  <div class="logo">DEADLIFT<span>.JP</span></div>
+  <div class="topbar-right">
+    <div class="status-dot"></div>
+    <span>Coaching Intake Form</span>
+  </div>
+</div>
+
+<!-- Progress -->
+<div class="progress-bar">
+  <div class="progress-fill" id="progressFill"></div>
+</div>
+
+<!-- Hero -->
+<div class="hero">
+  <div class="hero-eyebrow">Powered by DEADLIFT.JP Coaching</div>
+  <h1 class="hero-title">COACHING<br><span>INTAKE</span></h1>
+  <div class="hero-divider"></div>
+  <p class="hero-subtitle">
+    より精度の高いプログラムを作成するために、できる限り詳しく記入してください。<br>
+    記入時間の目安：約10〜15分
+  </p>
+</div>
+
+<!-- Form -->
+<div class="form-wrap">
+<form id="intakeForm" action="https://formspree.io/f/maqpovlv" method="POST">
+
+<!-- ===== 01 基本情報 ===== -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-num">01</div>
+    <div class="section-title">基本情報</div>
+  </div>
+
+  <div class="grid-2" style="margin-bottom:16px;">
+    <div class="field">
+      <div class="field-label">氏名 <span class="req">*</span></div>
+      <input type="text" name="氏名" placeholder="藤井 優弥" required>
+    </div>
+    <div class="field">
+      <div class="field-label">メールアドレス <span class="req">*</span></div>
+      <input type="email" name="メール" placeholder="example@email.com" required>
+    </div>
+  </div>
+
+  <div class="grid-3" style="margin-bottom:16px;">
+    <div class="field">
+      <div class="field-label">年齢</div>
+      <div class="input-unit">
+        <input type="number" name="年齢" placeholder="27" min="13" max="90">
+        <div class="unit-badge">歳</div>
+      </div>
+    </div>
+    <div class="field">
+      <div class="field-label">体重</div>
+      <div class="input-unit">
+        <input type="number" name="体重" placeholder="78" step="0.1">
+        <div class="unit-badge">kg</div>
+      </div>
+    </div>
+    <div class="field">
+      <div class="field-label">身長</div>
+      <div class="input-unit">
+        <input type="number" name="身長" placeholder="170" min="100" max="250">
+        <div class="unit-badge">cm</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div class="field">
+      <div class="field-label">性別</div>
+      <div class="choice-group">
+        <div class="choice-item"><input type="radio" name="性別" id="g_m" value="男性"><label for="g_m">男性</label></div>
+        <div class="choice-item"><input type="radio" name="性別" id="g_f" value="女性"><label for="g_f">女性</label></div>
+        <div class="choice-item"><input type="radio" name="性別" id="g_o" value="その他"><label for="g_o">その他</label></div>
+      </div>
+    </div>
+    <div class="field">
+      <div class="field-label">体重階級</div>
+      <select name="体重階級">
+        <option value="">選択してください</option>
+        <option>53kg級</option><option>59kg級</option><option>66kg級</option>
+        <option>74kg級</option><option>83kg級</option><option>93kg級</option>
+        <option>105kg級</option><option>120kg級</option><option>120kg超級</option>
+        <option>47kg級(女)</option><option>52kg級(女)</option><option>57kg級(女)</option>
+        <option>63kg級(女)</option><option>72kg級(女)</option><option>84kg級(女)</option><option>84kg超級(女)</option>
+      </select>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 02 競技歴・レベル ===== -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-num">02</div>
+    <div class="section-title">競技歴・レベル</div>
+  </div>
+
+  <div class="grid-2" style="margin-bottom:16px;">
+    <div class="field">
+      <div class="field-label">パワーリフティング歴</div>
+      <select name="競技歴年数">
+        <option value="">選択してください</option>
+        <option>1年未満</option><option>1〜2年</option><option>3〜5年</option>
+        <option>6〜10年</option><option>10年以上</option>
+      </select>
+    </div>
+    <div class="field">
+      <div class="field-label">競技レベル</div>
+      <select name="競技レベル">
+        <option value="">選択してください</option>
+        <option>初心者（大会未経験）</option>
+        <option>初級（大会経験1〜3回）</option>
+        <option>中級（地方レベル）</option>
+        <option>上級（全国レベル）</option>
+        <option>エリート（日本記録・世界レベル）</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="grid-2" style="margin-bottom:16px;">
+    <div class="field">
+      <div class="field-label">ギアスタイル</div>
+      <div class="choice-group">
+        <div class="choice-item"><input type="radio" name="ギア" id="raw" value="ノーギア(RAW)"><label for="raw">ノーギア（RAW）</label></div>
+        <div class="choice-item"><input type="radio" name="ギア" id="eq" value="ギア付き"><label for="eq">ギア付き</label></div>
+        <div class="choice-item"><input type="radio" name="ギア" id="wraps" value="ラップ使用"><label for="wraps">ラップ使用</label></div>
+      </div>
+    </div>
+    <div class="field">
+      <div class="field-label">所属連盟・団体</div>
+      <input type="text" name="所属連盟" placeholder="例：JPF、JFPF、IPF など">
+    </div>
+  </div>
+
+  <div class="field">
+    <div class="field-label">過去の主な大会成績・自己ベスト</div>
+    <div class="field-hint">大会名・年・記録など、わかる範囲で</div>
+    <textarea name="過去成績" placeholder="例：2024年 全日本選手権 83kg級 5位&#10;SQ285 / BP165 / DL320 / Total770kg"></textarea>
+  </div>
+</div>
+
+<!-- ===== 03 現在の記録 ===== -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-num">03</div>
+    <div class="section-title">現在の記録</div>
+  </div>
+
+  <div style="margin-bottom:16px;">
+    <div class="field-label" style="margin-bottom:12px;">競技1RM（直近の試合または練習で確認できた最大重量）</div>
+    <div class="sbd-grid">
+      <div class="sbd-cell">
+        <div class="sbd-label">SQUAT</div>
+        <div class="input-unit" style="flex-direction:column;gap:4px;">
+          <input type="number" name="スクワット1RM" placeholder="0" step="0.5">
+        </div>
+        <div style="font-size:10px;color:var(--gray);text-align:center;">kg</div>
+      </div>
+      <div class="sbd-cell">
+        <div class="sbd-label">BENCH</div>
+        <div class="input-unit" style="flex-direction:column;gap:4px;">
+          <input type="number" name="ベンチプレス1RM" placeholder="0" step="0.5">
+        </div>
+        <div style="font-size:10px;color:var(--gray);text-align:center;">kg</div>
+      </div>
+      <div class="sbd-cell">
+        <div class="sbd-label">DEAD</div>
+        <div class="input-unit" style="flex-direction:column;gap:4px;">
+          <input type="number" name="デッドリフト1RM" placeholder="0" step="0.5">
+        </div>
+        <div style="font-size:10px;color:var(--gray);text-align:center;">kg</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="field" style="margin-bottom:16px;">
+    <div class="field-label">最後に記録を更新したのはいつ頃？</div>
+    <div class="choice-group">
+      <div class="choice-item"><input type="radio" name="記録更新時期" id="r1" value="1ヶ月以内"><label for="r1">1ヶ月以内</label></div>
+      <div class="choice-item"><input type="radio" name="記録更新時期" id="r2" value="3ヶ月以内"><label for="r2">3ヶ月以内</label></div>
+      <div class="choice-item"><input type="radio" name="記録更新時期" id="r3" value="6ヶ月以内"><label for="r3">6ヶ月以内</label></div>
+      <div class="choice-item"><input type="radio" name="記録更新時期" id="r4" value="1年以上前"><label for="r4">1年以上前</label></div>
+      <div class="choice-item"><input type="radio" name="記録更新時期" id="r5" value="停滞中"><label for="r5">停滞中</label></div>
+    </div>
+  </div>
+
+  <div class="field">
+    <div class="field-label">今サイクルの目標記録</div>
+    <div class="grid-3">
+      <div class="input-unit">
+        <input type="number" name="目標スクワット" placeholder="SQ" step="0.5">
+        <div class="unit-badge">kg</div>
+      </div>
+      <div class="input-unit">
+        <input type="number" name="目標ベンチ" placeholder="BP" step="0.5">
+        <div class="unit-badge">kg</div>
+      </div>
+      <div class="input-unit">
+        <input type="number" name="目標デッドリフト" placeholder="DL" step="0.5">
+        <div class="unit-badge">kg</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 04 大会予定 ===== -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-num">04</div>
+    <div class="section-title">大会・目標設定</div>
+  </div>
+
+  <div class="grid-2" style="margin-bottom:16px;">
+    <div class="field">
+      <div class="field-label">次の大会日程</div>
+      <input type="date" name="大会日程">
+    </div>
+    <div class="field">
+      <div class="field-label">大会名</div>
+      <input type="text" name="大会名" placeholder="例：全日本パワーリフティング選手権">
+    </div>
+  </div>
+
+  <div class="field" style="margin-bottom:16px;">
+    <div class="field-label">今サイクルの優先目標</div>
+    <div class="choice-group">
+      <div class="choice-item"><input type="radio" name="優先目標" id="g1" value="競技記録の更新"><label for="g1">競技記録の更新</label></div>
+      <div class="choice-item"><input type="radio" name="優先目標" id="g2" value="大会完走・入賞"><label for="g2">大会完走・入賞</label></div>
+      <div class="choice-item"><input type="radio" name="優先目標" id="g3" value="筋肥大と競技力の両立"><label for="g3">筋肥大と競技力の両立</label></div>
+      <div class="choice-item"><input type="radio" name="優先目標" id="g4" value="特定種目の強化"><label for="g4">特定種目の強化</label></div>
+      <div class="choice-item"><input type="radio" name="優先目標" id="g5" value="怪我からの復帰"><label for="g5">怪我からの復帰</label></div>
+    </div>
+  </div>
+
+  <div class="field">
+    <div class="field-label">最も強化したい種目・局面</div>
+    <textarea name="強化したい点" placeholder="例：スクワットのボトム（深いところからの立ち上がりが弱い）&#10;ベンチプレスのロックアウト（肩の怪我でトップが弱い）&#10;デッドリフト全体的にもっと上げたい" rows="3"></textarea>
+  </div>
+</div>
+
+<!-- ===== 05 トレーニング環境 ===== -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-num">05</div>
+    <div class="section-title">トレーニング環境・頻度</div>
+  </div>
+
+  <div class="grid-2" style="margin-bottom:16px;">
+    <div class="field">
+      <div class="field-label">週のトレーニング日数</div>
+      <select name="週トレーニング日数">
+        <option value="">選択してください</option>
+        <option>週2日</option><option>週3日</option><option>週4日</option>
+        <option>週5日</option><option>週6日以上</option>
+      </select>
+    </div>
+    <div class="field">
+      <div class="field-label">1回のトレーニング時間</div>
+      <select name="1回の時間">
+        <option value="">選択してください</option>
+        <option>60分以内</option><option>60〜90分</option><option>90〜120分</option><option>120分以上</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="field" style="margin-bottom:16px;">
+    <div class="field-label">トレーニング環境</div>
+    <div class="choice-group">
+      <div class="choice-item"><input type="radio" name="環境" id="e1" value="フルスペックPLジム"><label for="e1">フルスペックPLジム</label></div>
+      <div class="choice-item"><input type="radio" name="環境" id="e2" value="商業ジム"><label for="e2">商業ジム</label></div>
+      <div class="choice-item"><input type="radio" name="環境" id="e3" value="自宅ジム"><label for="e3">自宅ジム</label></div>
+      <div class="choice-item"><input type="radio" name="環境" id="e4" value="大学・部活"><label for="e4">大学・部活</label></div>
+    </div>
+  </div>
+
+  <div class="field" style="margin-bottom:16px;">
+    <div class="field-label">使えない・苦手な種目があれば（怪我・設備の都合など）</div>
+    <textarea name="使えない種目" placeholder="例：レッグプレスがジムにない、フェイスプルで肩が痛い" rows="2"></textarea>
+  </div>
+
+  <div class="field">
+    <div class="field-label">過去に使ったプログラムで効果があったもの・なかったもの</div>
+    <div class="field-hint">Sheiko、RTS、5/3/1、自己流など</div>
+    <textarea name="過去のプログラム" placeholder="例：Sheiko高ボリューム系は疲れすぎてダメだった。5/3/1は初期に効いた。" rows="3"></textarea>
+  </div>
+</div>
+
+<!-- ===== 06 フォーム・弱点分析 ===== -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-num">06</div>
+    <div class="section-title">フォーム・弱点の詳細</div>
+  </div>
+
+  <div class="field" style="margin-bottom:24px;">
+    <div class="field-label" style="margin-bottom:12px;">スクワット</div>
+    <div class="grid-2" style="margin-bottom:10px;">
+      <div class="field">
+        <div class="field-hint">失速・潰れるのはどの局面？</div>
+        <select name="SQ弱点局面">
+          <option value="">選択してください</option>
+          <option>ボトム（最下点からの切り返し）</option>
+          <option>ミドル（立ち上がりの途中）</option>
+          <option>トップ（ロックアウト付近）</option>
+          <option>全体的に力負け</option>
+          <option>特になし</option>
+        </select>
+      </div>
+      <div class="field">
+        <div class="field-hint">スタンス幅</div>
+        <select name="SQスタンス">
+          <option value="">選択してください</option>
+          <option>ナロー</option><option>ミディアム</option>
+          <option>ワイド</option><option>スーパーワイド</option>
+        </select>
+      </div>
+    </div>
+    <textarea name="SQ詳細" placeholder="例：ボトムで前傾しすぎる。重くなると膝が内側に入る。" rows="2"></textarea>
+  </div>
+
+  <div class="field" style="margin-bottom:24px;">
+    <div class="field-label" style="margin-bottom:12px;">ベンチプレス</div>
+    <div class="grid-2" style="margin-bottom:10px;">
+      <div class="field">
+        <div class="field-hint">失速・潰れるのはどの局面？</div>
+        <select name="BP弱点局面">
+          <option value="">選択してください</option>
+          <option>ボトム（胸に触れてから最初の押し）</option>
+          <option>ミドル</option>
+          <option>トップ（ロックアウト）</option>
+          <option>全体的に力負け</option>
+          <option>特になし</option>
+        </select>
+      </div>
+      <div class="field">
+        <div class="field-hint">グリップ幅</div>
+        <select name="BPグリップ">
+          <option value="">選択してください</option>
+          <option>ナロー</option><option>ミディアム</option>
+          <option>ワイド（最大幅付近）</option>
+        </select>
+      </div>
+    </div>
+    <textarea name="BP詳細" placeholder="例：右肩が痛く、ロックアウト付近で弱くなる。アーチは高め。" rows="2"></textarea>
+  </div>
+
+  <div class="field">
+    <div class="field-label" style="margin-bottom:12px;">デッドリフト</div>
+    <div class="grid-2" style="margin-bottom:10px;">
+      <div class="field">
+        <div class="field-hint">スタイル</div>
+        <select name="DLスタイル">
+          <option value="">選択してください</option>
+          <option>コンベンショナル</option><option>スモウ</option><option>両方使う</option>
+        </select>
+      </div>
+      <div class="field">
+        <div class="field-hint">失速するのはどの局面？</div>
+        <select name="DL弱点局面">
+          <option value="">選択してください</option>
+          <option>床からの引き始め</option>
+          <option>膝付近（ミッドプル）</option>
+          <option>ロックアウト</option>
+          <option>全体的に力負け</option>
+          <option>特になし</option>
+        </select>
+      </div>
+    </div>
+    <textarea name="DL詳細" placeholder="例：膝を過ぎたあたりで失速する。背中が丸まりやすい。" rows="2"></textarea>
+  </div>
+</div>
+
+<!-- ===== 07 怪我・コンディション ===== -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-num">07</div>
+    <div class="section-title">怪我・身体コンディション</div>
+  </div>
+
+  <div class="field" style="margin-bottom:16px;">
+    <div class="field-label">現在の怪我・痛みがある部位（複数選択可）</div>
+    <div class="injury-grid">
+      <div class="choice-item"><input type="checkbox" name="怪我部位" id="inj0" value="なし"><label for="inj0">なし（問題なし）</label></div>
+      <div class="choice-item"><input type="checkbox" name="怪我部位" id="inj1" value="右肩"><label for="inj1">右肩</label></div>
+      <div class="choice-item"><input type="checkbox" name="怪我部位" id="inj2" value="左肩"><label for="inj2">左肩</label></div>
+      <div class="choice-item"><input type="checkbox" name="怪我部位" id="inj3" value="右肘"><label for="inj3">右肘</label></div>
+      <div class="choice-item"><input type="checkbox" name="怪我部位" id="inj4" value="左肘"><label for="inj4">左肘</label></div>
+      <div class="choice-item"><input type="checkbox" name="怪我部位" id="inj5" value="腰"><label for="inj5">腰</label></div>
+      <div class="choice-item"><input type="checkbox" name="怪我部位" id="inj6" value="右膝"><label for="inj6">右膝</label></div>
+      <div class="choice-item"><input type="checkbox" name="怪我部位" id="inj7" value="左膝"><label for="inj7">左膝</label></div>
+      <div class="choice-item"><input type="checkbox" name="怪我部位" id="inj8" value="股関節"><label for="inj8">股関節</label></div>
+      <div class="choice-item"><input type="checkbox" name="怪我部位" id="inj9" value="首"><label for="inj9">首</label></div>
+      <div class="choice-item"><input type="checkbox" name="怪我部位" id="inj10" value="手首"><label for="inj10">手首</label></div>
+      <div class="choice-item"><input type="checkbox" name="怪我部位" id="inj11" value="その他"><label for="inj11">その他</label></div>
+    </div>
+  </div>
+
+  <div class="field" style="margin-bottom:16px;">
+    <div class="field-label">怪我・痛みの詳細</div>
+    <div class="field-hint">診断名・どんな動作で痛いか・いつから・MRI/レントゲンの有無など</div>
+    <textarea name="怪我詳細" placeholder="例：右肩甲下筋部分断裂（MRI確認済み）。外転のトップで痛み。フェイスプル・ラットプルダウン不可。ベンチは可能だがトップが弱くなっている。" rows="4"></textarea>
+  </div>
+
+  <div class="field" style="margin-bottom:16px;">
+    <div class="field-label">過去の主な怪我歴</div>
+    <textarea name="過去の怪我" placeholder="例：2022年 腰椎椎間板ヘルニア（現在は回復）、2023年 右膝半月板損傷（手術なし）" rows="3"></textarea>
+  </div>
+
+  <div class="grid-2">
+    <div class="field">
+      <div class="field-label">現在リハビリ・治療中？</div>
+      <div class="choice-group">
+        <div class="choice-item"><input type="radio" name="治療中" id="reh1" value="はい"><label for="reh1">はい（通院中）</label></div>
+        <div class="choice-item"><input type="radio" name="治療中" id="reh2" value="いいえ"><label for="reh2">いいえ</label></div>
+        <div class="choice-item"><input type="radio" name="治療中" id="reh3" value="様子見"><label for="reh3">様子見</label></div>
+      </div>
+    </div>
+    <div class="field">
+      <div class="field-label">医師から運動制限の指示はある？</div>
+      <div class="choice-group">
+        <div class="choice-item"><input type="radio" name="運動制限" id="lim1" value="あり"><label for="lim1">あり</label></div>
+        <div class="choice-item"><input type="radio" name="運動制限" id="lim2" value="なし"><label for="lim2">なし</label></div>
+        <div class="choice-item"><input type="radio" name="運動制限" id="lim3" value="未確認"><label for="lim3">未確認</label></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 08 回復・生活習慣 ===== -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-num">08</div>
+    <div class="section-title">回復・生活習慣</div>
+  </div>
+
+  <div class="grid-2" style="margin-bottom:16px;">
+    <div class="field">
+      <div class="field-label">1日の平均睡眠時間</div>
+      <select name="睡眠時間">
+        <option value="">選択してください</option>
+        <option>5時間未満</option><option>5〜6時間</option><option>6〜7時間</option>
+        <option>7〜8時間</option><option>8時間以上</option>
+      </select>
+    </div>
+    <div class="field">
+      <div class="field-label">仕事・生活スタイル</div>
+      <select name="生活スタイル">
+        <option value="">選択してください</option>
+        <option>デスクワーク（座り仕事）</option>
+        <option>立ち仕事（軽作業）</option>
+        <option>肉体労働（重作業）</option>
+        <option>学生</option>
+        <option>プロ選手・専業</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="field" style="margin-bottom:16px;">
+    <div class="field-label">筋肉痛は通常何日で抜けますか？</div>
+    <div class="choice-group">
+      <div class="choice-item"><input type="radio" name="筋肉痛回復" id="rec1" value="1日以内"><label for="rec1">1日以内</label></div>
+      <div class="choice-item"><input type="radio" name="筋肉痛回復" id="rec2" value="2日程度"><label for="rec2">2日程度</label></div>
+      <div class="choice-item"><input type="radio" name="筋肉痛回復" id="rec3" value="3〜4日"><label for="rec3">3〜4日</label></div>
+      <div class="choice-item"><input type="radio" name="筋肉痛回復" id="rec4" value="5日以上"><label for="rec4">5日以上</label></div>
+    </div>
+  </div>
+
+  <div class="grid-2" style="margin-bottom:16px;">
+    <div class="field">
+      <div class="field-label">栄養・食事の状況</div>
+      <select name="栄養状況">
+        <option value="">選択してください</option>
+        <option>しっかり管理できている</option>
+        <option>ある程度意識している</option>
+        <option>あまり管理できていない</option>
+        <option>増量中</option>
+        <option>減量中（体重管理）</option>
+      </select>
+    </div>
+    <div class="field">
+      <div class="field-label">プロテイン・サプリメント</div>
+      <select name="サプリ">
+        <option value="">選択してください</option>
+        <option>プロテインのみ</option>
+        <option>プロテイン＋クレアチン</option>
+        <option>複数のサプリを活用</option>
+        <option>ほとんど使っていない</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="field">
+    <div class="field-label">ストレスレベル・メンタル状態</div>
+    <div class="choice-group">
+      <div class="choice-item"><input type="radio" name="ストレス" id="st1" value="低い（問題なし）"><label for="st1">低い</label></div>
+      <div class="choice-item"><input type="radio" name="ストレス" id="st2" value="普通"><label for="st2">普通</label></div>
+      <div class="choice-item"><input type="radio" name="ストレス" id="st3" value="やや高い"><label for="st3">やや高い</label></div>
+      <div class="choice-item"><input type="radio" name="ストレス" id="st4" value="高い"><label for="st4">高い</label></div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 09 コーチングへの期待 ===== -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-num">09</div>
+    <div class="section-title">コーチングへの期待</div>
+  </div>
+
+  <div class="field" style="margin-bottom:16px;">
+    <div class="field-label">コーチに期待すること（複数選択可）</div>
+    <div class="choice-group">
+      <div class="choice-item"><input type="checkbox" name="期待" id="ex1" value="プログラム作成"><label for="ex1">プログラム作成</label></div>
+      <div class="choice-item"><input type="checkbox" name="期待" id="ex2" value="フォームチェック"><label for="ex2">フォームチェック</label></div>
+      <div class="choice-item"><input type="checkbox" name="期待" id="ex3" value="栄養アドバイス"><label for="ex3">栄養アドバイス</label></div>
+      <div class="choice-item"><input type="checkbox" name="期待" id="ex4" value="大会戦略"><label for="ex4">大会戦略</label></div>
+      <div class="choice-item"><input type="checkbox" name="期待" id="ex5" value="メンタルサポート"><label for="ex5">メンタルサポート</label></div>
+      <div class="choice-item"><input type="checkbox" name="期待" id="ex6" value="怪我予防"><label for="ex6">怪我予防</label></div>
+    </div>
+  </div>
+
+  <div class="field" style="margin-bottom:16px;">
+    <div class="field-label">過去にコーチングを受けたことはある？</div>
+    <div class="choice-group">
+      <div class="choice-item"><input type="radio" name="コーチ歴" id="co1" value="なし"><label for="co1">なし（初めて）</label></div>
+      <div class="choice-item"><input type="radio" name="コーチ歴" id="co2" value="あり（オンライン）"><label for="co2">あり（オンライン）</label></div>
+      <div class="choice-item"><input type="radio" name="コーチ歴" id="co3" value="あり（対面）"><label for="co3">あり（対面）</label></div>
+    </div>
+  </div>
+
+  <div class="field" style="margin-bottom:16px;">
+    <div class="field-label">コーチとのやりとりの希望頻度</div>
+    <div class="choice-group">
+      <div class="choice-item"><input type="radio" name="連絡頻度" id="fr1" value="毎日"><label for="fr1">毎日</label></div>
+      <div class="choice-item"><input type="radio" name="連絡頻度" id="fr2" value="週2〜3回"><label for="fr2">週2〜3回</label></div>
+      <div class="choice-item"><input type="radio" name="連絡頻度" id="fr3" value="週1回"><label for="fr3">週1回</label></div>
+      <div class="choice-item"><input type="radio" name="連絡頻度" id="fr4" value="必要なときだけ"><label for="fr4">必要なときだけ</label></div>
+    </div>
+  </div>
+
+  <div class="field">
+    <div class="field-label">その他・自由記入</div>
+    <div class="field-hint">コーチへ伝えたいこと、心配なこと、質問など何でも</div>
+    <textarea name="その他" placeholder="例：仕事が繁忙期で3月は週3しか練習できない可能性がある。&#10;スクワットの動画を送るので見てほしい。&#10;大会に向けて体重を2kg落とす必要がある。" rows="5"></textarea>
+  </div>
+</div>
+
+<!-- Submit -->
+<div class="submit-area">
+  <button type="submit" class="btn-submit">
+    カウンセリングシートを送信する
+  </button>
+  <p class="submit-note">
+    送信後、コーチより2〜3営業日以内にご連絡いたします。<br>
+    入力内容はSSL暗号化で送信されます。
+  </p>
+</div>
+
+</form>
+</div>
+
+<!-- Success -->
+<div class="success-overlay" id="successOverlay">
+  <div class="success-icon">✓</div>
+  <div class="success-title">送信完了</div>
+  <p class="success-sub">
+    カウンセリングシートを受け付けました。<br>
+    コーチより2〜3営業日以内にご連絡いたします。<br><br>
+    <span style="color:var(--gold);">DEADLIFT.JP</span> を選んでいただきありがとうございます。
+  </p>
+</div>
+
+<script>
+// Progress bar
+function updateProgress() {
+  const form = document.getElementById('intakeForm');
+  const inputs = form.querySelectorAll('input[required], select[required]');
+  const filled = [...inputs].filter(el => {
+    if (el.type === 'radio' || el.type === 'checkbox') {
+      return document.querySelector(`input[name="${el.name}"]:checked`);
+    }
+    return el.value.trim() !== '';
+  });
+  const pct = inputs.length > 0 ? (filled.length / inputs.length * 100) : 0;
+  const allInputs = form.querySelectorAll('input:not([type=radio]):not([type=checkbox]), select, textarea');
+  const allFilled = [...allInputs].filter(el => el.value.trim() !== '').length;
+  const totalAll = allInputs.length;
+  const overall = Math.min(100, Math.round(allFilled / totalAll * 100));
+  document.getElementById('progressFill').style.width = overall + '%';
+}
+
+document.querySelectorAll('input, select, textarea').forEach(el => {
+  el.addEventListener('change', updateProgress);
+  el.addEventListener('input', updateProgress);
+});
+
+// Form submit
+document.getElementById('intakeForm').addEventListener('submit', async function(e) {
+  e.preventDefault();
+  const btn = document.querySelector('.btn-submit');
+  btn.textContent = '送信中...';
+  btn.disabled = true;
+
+  const formData = new FormData(this);
+
+  try {
+    const res = await fetch(this.action, {
+      method: 'POST',
+      body: formData,
+      headers: { 'Accept': 'application/json' }
+    });
+
+    if (res.ok) {
+      document.getElementById('successOverlay').classList.add('show');
+    } else {
+      throw new Error('送信失敗');
+    }
+  } catch(err) {
+    btn.textContent = 'カウンセリングシートを送信する';
+    btn.disabled = false;
+    alert('送信に失敗しました。もう一度お試しください。');
+  }
+});
+
+// Smooth focus
+document.querySelectorAll('input, select, textarea').forEach(el => {
+  el.addEventListener('focus', function() {
+    this.closest('.field')?.classList.add('focused');
+  });
+  el.addEventListener('blur', function() {
+    this.closest('.field')?.classList.remove('focused');
+  });
+});
+</script>
+</body>
+</html>
