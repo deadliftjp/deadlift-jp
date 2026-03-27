@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DEADLIFT.JP｜コーチ管理画面</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Sans+JP:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #1a1a2e;
+    --iron: #16213e;
+    --steel: #0f3460;
+    --panel: #f8f9fa;
+    --gold: #c9a84c;
+    --gold-dim: #8a6e2f;
+    --gold-light: #e8c97a;
+    --white: #1a1a2e;
+    --gray: #555;
+    --gray-light: #777;
+    --green: #2ecc71;
+    --border: #dee2e6;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #f0f2f5;
+    color: #1a1a2e;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-weight: 300;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* TOP BAR */
+  .topbar {
+    background: var(--iron);
+    border-bottom: 1px solid var(--border);
+    padding: 0 32px;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 200;
+  }
+
+  .logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    letter-spacing: 4px;
+    color: var(--gold);
+  }
+  .logo span { color: var(--white); opacity: 0.5; }
+
+  .badge {
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: var(--gray);
+    background: var(--steel);
+    padding: 4px 10px;
+    text-transform: uppercase;
+  }
+
+  /* LAYOUT */
+  .layout {
+    display: grid;
+    grid-template-columns: 380px 1fr;
+    flex: 1;
+    min-height: calc(100vh - 56px);
+  }
+
+  /* LEFT PANEL */
+  .left-panel {
+    background: #f8f9fa;
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 56px);
+    position: sticky;
+    top: 56px;
+    overflow: hidden;
+  }
+
+  .panel-header {
+    padding: 28px 28px 20px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .panel-label {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 11px;
+    letter-spacing: 4px;
+    color: var(--gold);
+    margin-bottom: 6px;
+  }
+
+  .panel-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 20px;
+    letter-spacing: 2px;
+    color: var(--white);
+  }
+
+  .panel-desc {
+    font-size: 12px;
+    color: var(--gray);
+    margin-top: 6px;
+    line-height: 1.6;
+  }
+
+  /* EMAIL PASTE AREA */
+  .paste-area {
+    flex: 1;
+    padding: 20px 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    overflow-y: auto;
+  }
+
+  textarea#emailInput {
+    flex: 1;
+    min-height: 280px;
+    background: var(--steel);
+    border: 1px solid var(--border);
+    border-left: 2px solid var(--gold-dim);
+    color: var(--white);
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 12px;
+    font-weight: 300;
+    line-height: 1.8;
+    padding: 16px;
+    resize: none;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  textarea#emailInput:focus {
+    border-left-color: var(--gold);
+  }
+
+  textarea#emailInput::placeholder {
+    color: #444;
+    font-size: 12px;
+  }
+
+  .paste-hint {
+    font-size: 11px;
+    color: var(--gray);
+    letter-spacing: 1px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .paste-hint::before {
+    content: '●';
+    color: var(--gold);
+    font-size: 7px;
+  }
+
+  /* GENERATE BUTTON */
+  .btn-generate {
+    background: var(--gold);
+    color: var(--black);
+    border: none;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 17px;
+    letter-spacing: 4px;
+    padding: 16px;
+    cursor: pointer;
+    transition: all 0.2s;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  .btn-generate:hover { background: var(--gold-light); }
+  .btn-generate:disabled { background: #333; color: #666; cursor: not-allowed; }
+
+  .btn-clear {
+    background: transparent;
+    color: var(--gray);
+    border: 1px solid var(--border);
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 12px;
+    padding: 10px;
+    cursor: pointer;
+    transition: all 0.2s;
+    width: 100%;
+    letter-spacing: 1px;
+  }
+  .btn-clear:hover { border-color: var(--gray); color: var(--white); }
+
+  /* RIGHT PANEL */
+  .right-panel {
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+  }
+
+  /* EMPTY STATE */
+  .empty-state {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    padding: 60px;
+    text-align: center;
+  }
+
+  .empty-icon {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 72px;
+    color: #1e1e1e;
+    letter-spacing: 4px;
+    line-height: 1;
+  }
+
+  .empty-text {
+    font-size: 13px;
+    color: var(--gray);
+    line-height: 1.8;
+  }
+
+  /* LOADING STATE */
+  .loading-state {
+    display: none;
+    flex: 1;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    padding: 60px;
+  }
+
+  .loading-state.active { display: flex; }
+
+  .loading-ring {
+    width: 48px;
+    height: 48px;
+    border: 2px solid var(--border);
+    border-top-color: var(--gold);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+  }
+
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .loading-label {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 14px;
+    letter-spacing: 4px;
+    color: var(--gold);
+  }
+
+  .loading-sub {
+    font-size: 11px;
+    color: var(--gray);
+    letter-spacing: 2px;
+  }
+
+  /* RESULT */
+  .result-panel {
+    display: none;
+    flex-direction: column;
+    padding: 40px 48px;
+  }
+
+  .result-panel.active { display: flex; }
+
+  .result-topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 32px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .result-client-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    letter-spacing: 2px;
+    color: var(--white);
+  }
+
+  .result-meta {
+    font-size: 12px;
+    color: var(--gray);
+    margin-top: 4px;
+    letter-spacing: 1px;
+  }
+
+  .btn-copy {
+    background: transparent;
+    color: var(--gold);
+    border: 1px solid var(--gold-dim);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 13px;
+    letter-spacing: 3px;
+    padding: 10px 24px;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+
+  .btn-copy:hover { background: var(--gold); color: var(--black); }
+
+  /* PROGRAM CONTENT */
+  .program-content {
+    font-size: 14px;
+    line-height: 1.9;
+    color: #ccc;
+  }
+
+  .program-content h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    letter-spacing: 3px;
+    color: var(--gold);
+    margin: 40px 0 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .program-content h2:first-child { margin-top: 0; }
+
+  .program-content h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 16px;
+    letter-spacing: 2px;
+    color: var(--white);
+    margin: 24px 0 8px;
+  }
+
+  .program-content p { margin-bottom: 10px; }
+
+  .program-content strong { color: var(--white); font-weight: 700; }
+
+  .program-content table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 12px 0 20px;
+    font-size: 13px;
+  }
+
+  .program-content th {
+    background: var(--steel);
+    color: var(--gold);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 13px;
+    letter-spacing: 2px;
+    padding: 10px 14px;
+    text-align: left;
+    border: 1px solid var(--border);
+  }
+
+  .program-content td {
+    padding: 10px 14px;
+    border: 1px solid var(--border);
+    vertical-align: top;
+  }
+
+  .program-content tr:nth-child(even) td {
+    background: rgba(255,255,255,0.02);
+  }
+
+  .program-content li {
+    margin-left: 20px;
+    list-style: disc;
+    margin-bottom: 4px;
+  }
+
+  .btn-excel {
+    background: #1a6b3a;
+    color: #fff;
+    border: none;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 13px;
+    letter-spacing: 3px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .btn-excel:hover { background: #27ae60; }
+  .btn-excel:disabled { background: #333; color: #666; cursor: not-allowed; }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    .layout { grid-template-columns: 1fr; }
+    .left-panel { height: auto; position: static; }
+    .result-panel { padding: 24px 20px; }
+  }
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="logo">DEADLIFT<span>.JP</span></div>
+  <div class="badge">Coach Dashboard</div>
+</div>
+
+<div class="layout">
+
+  <!-- LEFT: メールペースト -->
+  <div class="left-panel">
+    <div class="panel-header">
+      <div class="panel-label">Step 01</div>
+      <div class="panel-title">メール内容をペースト</div>
+      <div class="panel-desc">Formspreeから届いたメールの本文をそのままコピー&ペーストしてください</div>
+    </div>
+
+    <div class="paste-area">
+      <!-- APIキー入力欄 -->
+      <div style="margin-bottom:16px;padding:0 4px;">
+        <div style="font-size:10px;color:#c9a84c;letter-spacing:2px;font-weight:bold;margin-bottom:6px;">API KEY</div>
+        <input id="apiKeyInput" type="password" placeholder="sk-ant-api03-..."
+          style="width:100%;background:#ffffff;border:1px solid #ced4da;color:#1a1a2e;padding:10px 12px;font-size:12px;font-family:monospace;outline:none;border-radius:2px;"
+          oninput="localStorage.setItem('dljp_api_key',this.value)">
+        <div style="font-size:10px;color:#555;margin-top:5px;">
+          未取得の場合は
+          <a href="https://console.anthropic.com/settings/keys" target="_blank" 
+            style="color:#c9a84c;">console.anthropic.com</a> で作成
+        </div>
+      </div>
+
+      <div class="paste-hint">Gmailを開いてメール本文を全選択してペースト</div>
+      <textarea id="emailInput" placeholder="【氏名】
+山田 太郎
+
+【年齢】
+28歳
+
+【スクワット1RM】
+140kg
+...
+（ここにメール本文をペーストしてください）"></textarea>
+      <div class="paste-hint">記入内容が自動で解析されます</div>
+    </div>
+
+    <div style="padding: 0 28px 28px; display: flex; flex-direction: column; gap: 10px;">
+      <button class="btn-generate" id="generateBtn" onclick="generateProgram()">
+        <span>▶</span> プログラムを生成する
+      </button>
+      <button class="btn-clear" onclick="clearAll()">クリア</button>
+    </div>
+  </div>
+
+  <!-- RIGHT: 出力エリア -->
+  <div class="right-panel" id="rightPanel">
+
+    <!-- 空の状態 -->
+    <div class="empty-state" id="emptyState">
+      <div class="empty-icon">4W</div>
+      <div class="empty-text">
+        左にメール内容をペーストして<br>
+        「プログラムを生成する」をクリック
+      </div>
+    </div>
+
+    <!-- ローディング -->
+    <div class="loading-state" id="loadingState">
+      <div class="loading-ring"></div>
+      <div class="loading-label">Generating Program</div>
+      <div class="loading-sub">AIがプログラムを作成中...</div>
+    </div>
+
+    <!-- 結果 -->
+    <div class="result-panel" id="resultPanel">
+      <div class="result-topbar">
+        <div>
+          <div class="result-client-name" id="clientNameDisplay">—</div>
+          <div class="result-meta" id="clientMetaDisplay">—</div>
+        </div>
+        <div style="display:flex;gap:10px;">
+          <button class="btn-copy" onclick="copyProgram()">コピー</button>
+          <button class="btn-excel" id="excelBtn" onclick="generateExcel()" style="display:none;">
+            ▼ Excel生成
+          </button>
+        </div>
+      </div>
+      <div class="program-content" id="programContent"></div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+async function generateProgram() {
+  const emailText = document.getElementById('emailInput').value.trim();
+  if (!emailText) {
+    alert('メール本文をペーストしてください');
+    return;
+  }
+
+  // UI切り替え
+  document.getElementById('emptyState').style.display = 'none';
+  document.getElementById('loadingState').classList.add('active');
+  document.getElementById('resultPanel').classList.remove('active');
+  document.getElementById('generateBtn').disabled = true;
+
+  // クライアント名・メタ情報を仮抽出
+  const nameMatch = emailText.match(/【氏名】\s*\n(.+)/);
+  const ageMatch = emailText.match(/【年齢】\s*\n(.+)/);
+  const weightMatch = emailText.match(/【体重】\s*\n(.+)/);
+  const squatMatch = emailText.match(/【スクワット1RM】\s*\n(.+)/);
+  const benchMatch = emailText.match(/【ベンチプレス1RM】\s*\n(.+)/);
+  const deadliftMatch = emailText.match(/【デッドリフト1RM】\s*\n(.+)/);
+
+  const clientName = nameMatch ? nameMatch[1].trim() : 'クライアント';
+  const meta = [
+    ageMatch ? ageMatch[1].trim() : '',
+    weightMatch ? weightMatch[1].trim() : '',
+    squatMatch ? `SQ ${squatMatch[1].trim()}` : '',
+    benchMatch ? `BP ${benchMatch[1].trim()}` : '',
+    deadliftMatch ? `DL ${deadliftMatch[1].trim()}` : '',
+  ].filter(Boolean).join('　/　');
+
+  const prompt = `あなたは日本チャンピオン・世界大会出場経験のあるパワーリフティングコーチです。
+以下はクライアントが記入したカウンセリングシートの内容です。
+この情報を元に、具体的かつ実践的な4週間トレーニングプログラムを日本語で作成してください。
+
+---
+${emailText}
+---
+
+【使用する種目リスト】
+以下の種目の中からのみプログラムを組んでください。それ以外の種目は使用禁止です。
+
+【スクワット系】
+- コンペティション スクワット（COMPETITION SQUAT）
+- ポーズ スクワット（PAUSE COMPETITION SQUAT）
+- ピン スクワット（PIN COMPETITION SQUAT）
+- ブルガリアン スプリットスクワット（BULGARIAN SPLIT SQUAT）
+- ダンベルランジ（DUMBBELL LUNGE）
+- レッグプレス（LEG PRESS）
+- レッグエクステンション（LEG EXTENSION）
+
+【ベンチプレス系】
+- コンペティション ベンチプレス（COMPETITION BENCH PRESS）
+- スポトベンチプレス（SPOTO COMPETITION BENCH PRESS）
+- ラーセンプレス（LARSEN COMPETITION BENCH PRESS）
+- テンポ ベンチプレス（TEMPO COMPETITION BENCH PRESS）
+- ブロック ベンチプレス（BLOCK COMPETITION GRIP BENCH PRESS）
+- クローズグリップ ベンチプレス（CLOSE GRIP BENCH PRESS）
+- ダンベル ベンチプレス（DUMBBELL BENCH PRESS）
+- マシン チェストプレス（MACHINE CHEST PRESS）
+
+【デッドリフト系】
+- コンペティション デッドリフト（COMPETITION DEADLIFT）
+- ポーズ デッドリフト（PAUSE COMPETITION DEADLIFT）
+
+【背中・肩】
+- ラットプルダウン（LAT PULLDOWN）
+- ケーブルロウ（CABLE ROW）
+- Tバーロウ（T BAR ROW / T BAR EOW）
+- バーベル ショルダープレス（BARBELL SHOULDER PRESS）
+- ラテラルレイズ（LATERAL RAISE）
+
+【腕・体幹】
+- トライセップ プッシュダウン（TRICEP PUSHDOWN）
+- バイセップカール（BICEP CURL）
+- ケーブルクランチ（CABLE CRUNCHES）
+
+【ハムストリングス】
+- マシン ハムストリングカール（MACHINE HAMSTRING CURL）
+
+以下の構成でプログラムを作成してください。
+
+## クライアント分析
+現状の強み・課題・注意点を3〜5行で。
+
+## プログラムの方針
+4週間の狙いと全体像を簡潔に。
+
+## 4週間プログラム詳細
+
+各DAYを以下の**厳密なフォーマット**で出力してください。
+- DAY番号と種目名は必ず「## DAY X  SQUAT」のように ## で始める
+- 各種目は必ずパイプ区切りのテーブル形式で出力
+- Load（重量）は必ず**具体的なkg数値**を記入する（1RMから計算）
+- バックダウンセットで「85%」などのパーセント表記を使う場合はLoad欄を空白にしてRPE欄に「85%」と書く
+- テーブルの列は必ず「種目 | セット×レップ | Load(kg) | RPE」の4列
+
+出力例：
+## DAY 1  SQUAT
+| 種目 | セット×レップ | Load(kg) | RPE |
+|---|---|---|---|
+| COMPETITION SQUAT | 1×2 | 250 | @5-6 |
+| COMPETITION SQUAT | 1×4 |  | 85% |
+| COMPETITION SQUAT | 2×6 | 210 | @7-8 |
+| LEG EXTENSION | 3×12 |  | @7-8 |
+
+## DAY 2  BENCH PRESS
+...（同様に続ける）
+
+DAYは4日分（DAY1〜DAY4）作成してください。WEEK構造は不要です。DAYのみ出力してください。`;
+
+  try {
+    const response = await (() => {
+      const apiKey = document.getElementById('apiKeyInput').value.trim();
+      if (!apiKey) {
+        alert('APIキーを入力してください\nAnthropicコンソール（console.anthropic.com）で取得できます');
+        throw new Error('No API key');
+      }
+      return fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-api-key': apiKey,
+          'anthropic-version': '2023-06-01',
+          'anthropic-dangerous-allow-browser': 'true'
+        },
+        body: JSON.stringify({
+          model: 'claude-sonnet-4-20250514',
+          max_tokens: 3000,
+          messages: [{ role: 'user', content: prompt }]
+        })
+      });
+    })();
+
+    const result = await response.json();
+    const text = result.content?.[0]?.text || 'エラーが発生しました。';
+
+    // 表示
+    document.getElementById('clientNameDisplay').textContent = clientName;
+    document.getElementById('clientMetaDisplay').textContent = meta || '—';
+    document.getElementById('programContent').innerHTML = renderMarkdown(text);
+
+    document.getElementById('loadingState').classList.remove('active');
+    document.getElementById('resultPanel').classList.add('active');
+
+    // 生テキストを保存（コピー用）
+    document.getElementById('programContent').dataset.raw = text;
+
+    // Excelボタンを表示・クライアントデータを保存
+    document.getElementById('excelBtn').style.display = 'block';
+    window._clientData = {
+      name: clientName,
+      age: ageMatch ? ageMatch[1].trim() : '',
+      weight: weightMatch ? weightMatch[1].trim() : '',
+      squat: squatMatch ? squatMatch[1].trim().replace('kg','').trim() : '',
+      bench: benchMatch ? benchMatch[1].trim().replace('kg','').trim() : '',
+      deadlift: deadliftMatch ? deadliftMatch[1].trim().replace('kg','').trim() : '',
+      goal: (emailText.match(/【目標】\s*\n(.+)/) || [])[1] || '',
+      competition: (emailText.match(/【大会予定】\s*\n(.+)/) || [])[1] || 'TBD',
+      program: text,
+    };
+
+  } catch (err) {
+    document.getElementById('loadingState').classList.remove('active');
+    document.getElementById('emptyState').style.display = 'flex';
+    alert('エラーが発生しました。もう一度お試しください。');
+  }
+
+  document.getElementById('generateBtn').disabled = false;
+}
+
+function renderMarkdown(text) {
+  return text
+    .replace(/^## (.+)$/gm, '<h2>$1</h2>')
+    .replace(/^### (.+)$/gm, '<h3>$1</h3>')
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+    .replace(/^\|(.+)\|$/gm, (match) => {
+      const cells = match.split('|').filter(c => c.trim());
+      if (cells.every(c => /^[-:]+$/.test(c.trim()))) return '';
+      const isHeader = match.includes('---');
+      const tag = 'td';
+      return '<tr>' + cells.map(c => `<${tag}>${c.trim()}</${tag}>`).join('') + '</tr>';
+    })
+    .replace(/(<tr>[\s\S]*?<\/tr>\n?)+/g, (m) => {
+      const rows = m.trim().split('\n').filter(r => r.trim());
+      if (rows.length > 1) {
+        return `<table><thead>${rows[0]}</thead><tbody>${rows.slice(1).join('')}</tbody></table>`;
+      }
+      return `<table><tbody>${m}</tbody></table>`;
+    })
+    .replace(/^- (.+)$/gm, '<li>$1</li>')
+    .replace(/(<li>.*<\/li>\n?)+/g, m => `<ul>${m}</ul>`)
+    .replace(/\n\n/g, '</p><p>')
+    .replace(/\n/g, '<br>');
+}
+
+function copyProgram() {
+  const raw = document.getElementById('programContent').dataset.raw || '';
+  const name = document.getElementById('clientNameDisplay').textContent;
+  const fullText = `【${name} 様｜4週間プログラム】\n\n${raw}`;
+
+  navigator.clipboard.writeText(fullText).then(() => {
+    const btn = document.querySelector('.btn-copy');
+    btn.textContent = 'コピー完了！';
+    btn.style.background = 'var(--green)';
+    btn.style.color = '#000';
+    setTimeout(() => {
+      btn.textContent = 'コピー';
+      btn.style.background = '';
+      btn.style.color = '';
+    }, 2000);
+  });
+}
+
+async function generateExcel() {
+  const btn = document.getElementById('excelBtn');
+  btn.disabled = true;
+  btn.textContent = '生成中...';
+
+  const d = window._clientData || {};
+  const payload = {
+    name: d.name || '',
+    age: d.age || '',
+    weight: d.weight || '',
+    competition: d.competition || 'TBD',
+    squat: d.squat || 0,
+    bench: d.bench || 0,
+    deadlift: d.deadlift || 0,
+    program: d.program || ''
+  };
+
+  try {
+    const res = await fetch('http://localhost:8765', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(payload)
+    });
+    if (!res.ok) throw new Error('server error');
+    const {xlsx} = await res.json();
+
+    const binary = atob(xlsx);
+    const bytes = new Uint8Array(binary.length);
+    for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
+    const blob = new Blob([bytes], {type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = (payload.name||'CLIENT').replace(/\s+/g,'_') + '_Training_Program.xlsx';
+    a.click();
+    URL.revokeObjectURL(url);
+
+    btn.textContent = '✓ ダウンロード完了';
+    btn.style.background = '#27ae60';
+    setTimeout(() => { btn.textContent='▼ Excel生成'; btn.style.background=''; btn.disabled=false; }, 3000);
+
+  } catch(e) {
+    document.getElementById('serverGuide').style.display = 'flex';
+    btn.textContent = '▼ Excel生成';
+    btn.style.background = '';
+    btn.disabled = false;
+  }
+}
+
+

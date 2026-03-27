@@ -1,0 +1,1433 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Yuya Fujii — Automotive Photographer & Filmmaker</title>
+<meta name="description" content="東京を拠点に活動するオートモーティブフォトグラファー / ビデオグラファー。アストンマーチン、ポルシェ、フェラーリをはじめとする高級車の撮影を専門とする。"/>
+<meta property="og:title" content="Yuya Fujii — Automotive Photographer & Filmmaker"/>
+<meta property="og:description" content="東京を拠点に活動するオートモーティブフォトグラファー / ビデオグラファー。アストンマーチン、ポルシェ、フェラーリをはじめとする高級車の撮影を専門とする。"/>
+<meta property="og:image" content="https://deadliftjp.github.io/deadlift-jp/ogp.jpg"/>
+<meta property="og:url" content="https://deadliftjp.github.io/deadlift-jp"/>
+<meta property="og:type" content="website"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="Yuya Fujii — Automotive Photographer & Filmmaker"/>
+<meta name="twitter:description" content="東京を拠点に活動するオートモーティブフォトグラファー / ビデオグラファー。アストンマーチン、ポルシェ、フェラーリをはじめとする高級車の撮影を専門とする。"/>
+<meta name="twitter:image" content="https://deadliftjp.github.io/deadlift-jp/ogp.jpg"/>
+<style>
+/* ─────────────────────────────────────────
+   RESET & TOKENS
+───────────────────────────────────────── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --g:#b8922a;
+  --g2:#e2c76a;
+  --g3:#6b4f10;
+  --ink:#080808;
+  --ink2:#111;
+  --ink3:#1c1c1c;
+  --ink4:#2a2a2a;
+  --fog:#888;
+  --paper:#f2f0ec;
+  --white:#fff;
+  --ff-serif:'Georgia','Times New Roman',serif;
+  --ff-sans:'Helvetica Neue','Arial',sans-serif;
+  --ease:cubic-bezier(.25,.46,.45,.94);
+}
+html{scroll-behavior:smooth;font-size:16px}
+body{
+  background:var(--ink);
+  color:var(--paper);
+  font-family:var(--ff-sans);
+  line-height:1.65;
+  overflow-x:hidden;
+  cursor:none;
+}
+
+/* ─── CURSOR ─── */
+.cur{
+  position:fixed;width:8px;height:8px;
+  background:var(--g);border-radius:50%;
+  pointer-events:none;z-index:9999;
+  transform:translate(-50%,-50%);
+  transition:transform .15s var(--ease),width .3s,height .3s,background .3s;
+}
+.cur-ring{
+  position:fixed;width:36px;height:36px;
+  border:1px solid rgba(184,146,42,.5);
+  border-radius:50%;pointer-events:none;z-index:9998;
+  transform:translate(-50%,-50%);
+  transition:transform .4s var(--ease),width .3s,height .3s,border-color .3s;
+}
+body:has(a:hover) .cur,body:has(button:hover) .cur{width:16px;height:16px;background:var(--g2)}
+body:has(a:hover) .cur-ring,body:has(button:hover) .cur-ring{width:56px;height:56px;border-color:var(--g)}
+
+/* ─── LOADER ─── */
+#loader{
+  position:fixed;inset:0;z-index:9000;
+  background:var(--ink);
+  display:flex;align-items:center;justify-content:center;
+  flex-direction:column;gap:2rem;
+  transition:opacity .8s var(--ease),visibility .8s;
+}
+#loader.done{opacity:0;visibility:hidden}
+.loader-logo{
+  font-family:var(--ff-serif);font-size:1.4rem;
+  letter-spacing:.4em;text-transform:uppercase;color:var(--g);
+}
+.loader-bar-wrap{width:200px;height:1px;background:var(--ink4)}
+.loader-bar{height:1px;width:0;background:var(--g);transition:width 1.4s var(--ease)}
+.loader-num{font-size:.65rem;letter-spacing:.3em;color:var(--fog);font-variant-numeric:tabular-nums}
+
+/* ─── NAV ─── */
+#nav{
+  position:fixed;top:0;left:0;right:0;z-index:800;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:1.6rem 3.5rem;
+  mix-blend-mode:normal;
+  transition:padding .4s,background .4s;
+}
+#nav.solid{background:rgba(8,8,8,.96);padding:1rem 3.5rem;backdrop-filter:blur(12px)}
+.nav-logo{
+  font-family:var(--ff-serif);font-size:.95rem;
+  letter-spacing:.3em;text-transform:uppercase;
+  color:var(--g);text-decoration:none;
+}
+.nav-logo span{display:block;font-size:.55rem;letter-spacing:.4em;color:rgba(242,240,236,.35);margin-top:2px}
+.nav-links{display:flex;gap:3rem;list-style:none}
+.nav-links a{
+  color:rgba(242,240,236,.5);text-decoration:none;
+  font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;
+  transition:color .3s;position:relative;
+}
+.nav-links a::after{
+  content:'';position:absolute;bottom:-4px;left:0;right:0;
+  height:1px;background:var(--g);transform:scaleX(0);
+  transition:transform .3s var(--ease);transform-origin:left;
+}
+.nav-links a:hover{color:var(--paper)}
+.nav-links a:hover::after{transform:scaleX(1)}
+.nav-cta{
+  font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--g);border:1px solid rgba(184,146,42,.4);
+  padding:.55rem 1.4rem;text-decoration:none;
+  transition:background .25s,color .25s,border-color .25s;
+}
+.nav-cta:hover{background:var(--g);color:var(--ink);border-color:var(--g)}
+.nav-burger{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none}
+.nav-burger span{display:block;width:22px;height:1px;background:var(--paper);transition:.3s}
+
+/* ─── HERO ─── */
+#hero{
+  position:relative;height:100svh;min-height:640px;
+  display:grid;place-items:end start;overflow:hidden;
+}
+.hero-bg{
+  position:absolute;inset:0;
+  background:
+    linear-gradient(180deg,rgba(8,8,8,.15) 0%,rgba(8,8,8,.45) 50%,rgba(8,8,8,.92) 100%),
+    url('portfolio.jp/DSC08258.jpg') center/cover no-repeat;
+}
+/* animated grain */
+.hero-bg::after{
+  content:'';position:absolute;inset:-50%;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  background-size:200px 200px;
+  animation:grain 8s steps(10) infinite;
+  pointer-events:none;opacity:.6;
+}
+@keyframes grain{
+  0%,100%{transform:translate(0,0)}
+  10%{transform:translate(-2%,-3%)}
+  20%{transform:translate(3%,2%)}
+  30%{transform:translate(-1%,4%)}
+  40%{transform:translate(2%,-2%)}
+  50%{transform:translate(-3%,1%)}
+  60%{transform:translate(1%,3%)}
+  70%{transform:translate(-2%,-1%)}
+  80%{transform:translate(4%,2%)}
+  90%{transform:translate(-1%,-3%)}
+}
+
+/* HERO car — SVG illustration */
+.hero-car{
+  position:absolute;
+  right:-4%;bottom:8%;
+  width:min(80vw,820px);
+  opacity:.22;
+  filter:drop-shadow(0 0 80px rgba(184,146,42,.15));
+  animation:carFloat 8s ease-in-out infinite;
+}
+@keyframes carFloat{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-12px)}
+}
+
+.hero-lines{
+  position:absolute;top:50%;left:0;right:0;
+  height:1px;background:linear-gradient(to right,transparent,rgba(184,146,42,.15),transparent);
+  transform:translateY(-50%);
+}
+.hero-vert{
+  position:absolute;left:3.5rem;top:0;bottom:0;
+  width:1px;background:linear-gradient(to bottom,transparent 15%,rgba(184,146,42,.12) 40%,rgba(184,146,42,.12) 70%,transparent);
+}
+
+.hero-content{
+  position:relative;z-index:2;
+  padding:0 3.5rem 7rem;
+  max-width:700px;
+}
+.hero-eyebrow{
+  display:inline-flex;align-items:center;gap:1rem;
+  font-size:.65rem;letter-spacing:.4em;text-transform:uppercase;color:var(--g);
+  margin-bottom:2rem;
+}
+.hero-eyebrow::before{content:'';width:32px;height:1px;background:var(--g)}
+.hero-h1{
+  font-family:var(--ff-serif);
+  font-size:clamp(3.2rem,7.5vw,7rem);
+  font-weight:400;line-height:.97;
+  letter-spacing:-.02em;
+  margin-bottom:2.5rem;
+}
+.hero-h1 .line{display:block;overflow:hidden}
+.hero-h1 .line span{
+  display:block;
+  animation:slideUp .9s var(--ease) both;
+}
+.hero-h1 .line:nth-child(2) span{animation-delay:.12s;font-style:italic;color:var(--g2)}
+.hero-h1 .line:nth-child(3) span{animation-delay:.22s}
+@keyframes slideUp{
+  from{transform:translateY(110%);opacity:0}
+  to{transform:translateY(0);opacity:1}
+}
+.hero-body{
+  font-size:.88rem;color:rgba(242,240,236,.5);
+  line-height:2;max-width:38ch;margin-bottom:3rem;
+  animation:fadeIn 1.2s .5s var(--ease) both;
+}
+@keyframes fadeIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+.hero-actions{
+  display:flex;gap:1.2rem;flex-wrap:wrap;
+  animation:fadeIn 1.2s .65s var(--ease) both;
+}
+.btn{
+  display:inline-flex;align-items:center;gap:.7rem;
+  padding:.85rem 2rem;font-size:.68rem;letter-spacing:.22em;
+  text-transform:uppercase;text-decoration:none;border:1px solid;
+  transition:.3s var(--ease);
+}
+.btn-outline{color:var(--g);border-color:rgba(184,146,42,.45)}
+.btn-outline:hover{background:var(--g);color:var(--ink);border-color:var(--g)}
+.btn-ghost{color:rgba(242,240,236,.45);border-color:rgba(242,240,236,.15)}
+.btn-ghost:hover{color:var(--paper);border-color:rgba(242,240,236,.4)}
+.btn-arr{font-size:.8rem;transition:transform .3s}
+.btn:hover .btn-arr{transform:translateX(4px)}
+
+/* hero scroll */
+.hero-scroll{
+  position:absolute;right:3.5rem;bottom:3.5rem;z-index:2;
+  writing-mode:vertical-rl;letter-spacing:.25em;
+  font-size:.6rem;text-transform:uppercase;color:rgba(242,240,236,.3);
+  display:flex;align-items:center;gap:.8rem;
+}
+.hero-scroll::after{
+  content:'';width:1px;height:64px;
+  background:linear-gradient(to bottom,var(--g),transparent);
+  animation:pulse 2s ease-in-out infinite;
+}
+@keyframes pulse{0%,100%{opacity:.3}50%{opacity:1}}
+
+/* hero stats */
+.hero-stats{
+  position:absolute;right:3.5rem;top:50%;
+  transform:translateY(-50%);z-index:2;
+  display:flex;flex-direction:column;gap:2.5rem;
+  animation:fadeIn 1.2s .8s var(--ease) both;
+}
+.hstat-n{
+  font-family:var(--ff-serif);font-size:2rem;
+  color:var(--g);line-height:1;
+}
+.hstat-l{
+  font-size:.58rem;letter-spacing:.25em;text-transform:uppercase;
+  color:rgba(242,240,236,.3);margin-top:.2rem;
+}
+
+/* ─── MARQUEE ─── */
+.marquee-strip{
+  background:var(--g);overflow:hidden;
+  padding:.65rem 0;white-space:nowrap;
+}
+.marquee-inner{
+  display:inline-flex;gap:3rem;
+  animation:marquee 18s linear infinite;
+}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.marquee-item{
+  font-size:.65rem;letter-spacing:.3em;text-transform:uppercase;
+  color:var(--ink);font-weight:700;
+}
+.marquee-dot{opacity:.4}
+
+/* ─── SECTION BASE ─── */
+.sec{padding:7rem 3.5rem}
+.sec-tag{
+  display:inline-flex;align-items:center;gap:.8rem;
+  font-size:.62rem;letter-spacing:.4em;text-transform:uppercase;color:var(--g);
+  margin-bottom:1.2rem;
+}
+.sec-tag::before{content:'';width:24px;height:1px;background:var(--g)}
+.sec-h{
+  font-family:var(--ff-serif);
+  font-size:clamp(2.2rem,4vw,3.8rem);
+  font-weight:400;line-height:1.1;margin-bottom:1rem;
+}
+.rule{width:40px;height:1px;background:var(--g);margin-bottom:2.5rem}
+
+/* ─── WORK ─── */
+#work{background:var(--ink2)}
+.work-top{
+  display:flex;align-items:flex-end;justify-content:space-between;
+  margin-bottom:4rem;flex-wrap:wrap;gap:2rem;
+}
+.pills{display:flex;gap:0}
+.pill{
+  padding:.5rem 1.2rem;font-size:.62rem;letter-spacing:.18em;
+  text-transform:uppercase;background:none;border:1px solid var(--ink4);
+  color:var(--fog);cursor:pointer;transition:.25s;
+  border-right:none;
+}
+.pill:last-child{border-right:1px solid var(--ink4)}
+.pill.on,.pill:hover{background:var(--g);color:var(--ink);border-color:var(--g)}
+.pill.on+.pill{border-left-color:var(--g)}
+
+/* MASONRY-STYLE GRID */
+.gallery{
+  display:grid;
+  grid-template-columns:repeat(12,1fr);
+  grid-auto-rows:220px;
+  gap:3px;
+}
+.gi{position:relative;overflow:hidden;background:var(--ink3);cursor:pointer}
+
+.gi-bg{
+  position:absolute;inset:0;
+  transition:transform .8s var(--ease);
+}
+.gi:hover .gi-bg{transform:scale(1.06)}
+.gi-ov{
+  position:absolute;inset:0;
+  background:linear-gradient(to top,rgba(8,8,8,.92) 0%,rgba(8,8,8,.2) 45%,transparent 100%);
+  opacity:0;transition:opacity .4s;
+  display:flex;flex-direction:column;justify-content:flex-end;padding:1.6rem;
+}
+.gi:hover .gi-ov{opacity:1}
+.gi-ov h3{font-family:var(--ff-serif);font-size:1.1rem;font-weight:400;margin-bottom:.3rem}
+.gi-ov p{font-size:.62rem;letter-spacing:.25em;text-transform:uppercase;color:var(--g)}
+.gi-num{
+  position:absolute;top:1rem;left:1rem;z-index:2;
+  font-size:.55rem;letter-spacing:.25em;color:rgba(255,255,255,.25);
+}
+
+/* placeholder gradients */
+.ph1{background:url('portfolio.jp/DSC05884.jpg') center/cover no-repeat}
+.ph2{background:url('portfolio.jp/DSC05993.jpg') center/cover no-repeat}
+.ph3{background:url('portfolio.jp/DSC06080.jpg') center/cover no-repeat}
+.ph4{background:url('portfolio.jp/DSC06116.jpg') center/cover no-repeat}
+.ph5{background:url('portfolio.jp/DSC06181.jpg') center/cover no-repeat}
+.ph6{background:url('portfolio.jp/DSC04310.jpg') center/cover no-repeat}
+.ph7{background:linear-gradient(125deg,#0a1414 0%,#122020 40%,#1a3030 65%,#060e0e 100%)}
+.ph8{background:url('portfolio.jp/DSC08113.jpg') center/cover no-repeat}
+.ph9{background:url('portfolio.jp/DSC08097.jpg') center/cover no-repeat}
+.ph10{background:url('portfolio.jp/DSC03278.jpg') center/cover no-repeat}
+.ph11{background:url('portfolio.jp/DSC03317.jpg') center/cover no-repeat}
+.ph12{background:url('portfolio.jp/DSC03705.jpg') center/cover no-repeat}
+.ph13{background:url('portfolio.jp/DSC03950.jpg') center/cover no-repeat}
+.ph14{background:url('portfolio.jp/DSC04349.jpg') center/cover no-repeat}
+.ph15{background:url('portfolio.jp/DSC04347.jpg') center/cover no-repeat}
+.ph16{background:url('portfolio.jp/DSC05234.jpg') center/cover no-repeat}
+.ph17{background:url('portfolio.jp/DSC03870.jpg') center/cover no-repeat}
+.ph18{background:url('portfolio.jp/DSC03887.jpg') center/cover no-repeat}
+.ph19{background:url('portfolio.jp/DSC04771.jpg') center/cover no-repeat}
+.ph20{background:url('portfolio.jp/DSC04774.jpg') center/cover no-repeat}
+.ph21{background:url('portfolio.jp/DSC04806.jpg') center/cover no-repeat}
+.ph22{background:url('portfolio.jp/DSC08114.jpg') center/cover no-repeat}
+.ph23{background:url('portfolio.jp/DSC08125.jpg') center/cover no-repeat}
+.ph24{background:url('portfolio.jp/DSC08139.jpg') center/cover no-repeat}
+.ph25{background:url('portfolio.jp/DSC08157.jpg') center/cover no-repeat}
+.ph26{background:url('portfolio.jp/DSC08174.jpg') center/cover no-repeat}
+.ph27{background:url('portfolio.jp/DSC08253-Edit.jpg') center/cover no-repeat}
+.ph28{background:url('portfolio.jp/DSC08258.jpg') center/cover no-repeat}
+.ph29{background:url('portfolio.jp/DSC08284-Edit.jpg') center/cover no-repeat}
+.ph30{background:url('portfolio.jp/DSC04212.jpg') center/cover no-repeat}
+.ph31{background:url('portfolio.jp/DSC04216.jpg') center/cover no-repeat}
+.ph32{background:url('portfolio.jp/DSC04229.jpg') center/cover no-repeat}
+.ph33{background:url('portfolio.jp/DSC04247.jpg') center/cover no-repeat}
+.ph34{background:url('portfolio.jp/DSC04250-2.jpg') center/cover no-repeat}
+.ph35{background:url('portfolio.jp/DSC04271.jpg') center/cover no-repeat}
+.ph36{background:url('portfolio.jp/DSC04275.jpg') center/cover no-repeat}
+.ph37{background:url('portfolio.jp/DSC04300.jpg') center/cover no-repeat}
+.ph38{background:url('portfolio.jp/DSC04440.jpg') center/cover no-repeat}
+.ph39{background:url('portfolio.jp/DSC04515.jpg') center/cover no-repeat}
+.ph40{background:url('portfolio.jp/DSC05254.jpg') center/cover no-repeat}
+.ph-label{
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  text-align:center;pointer-events:none;
+}
+.ph-label-car{
+  font-family:var(--ff-serif);font-size:.9rem;
+  color:rgba(255,255,255,.1);letter-spacing:.08em;
+  display:block;
+}
+.ph-label-type{
+  font-size:.5rem;letter-spacing:.35em;text-transform:uppercase;
+  color:rgba(255,255,255,.07);display:block;margin-top:.3rem;
+}
+
+/* ─── INTRO SPLIT ─── */
+#intro{background:var(--ink);padding:8rem 3.5rem}
+.intro-grid{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:6rem;align-items:center;max-width:1160px;margin:0 auto;
+}
+.intro-visual{
+  position:relative;aspect-ratio:3/4;
+  background:var(--ink3);overflow:hidden;
+}
+.intro-visual-bg{
+  position:absolute;inset:0;
+  background:linear-gradient(160deg,#101820 0%,#1a2c40 50%,#0a0a0a 100%);
+}
+.intro-visual::after{
+  content:'';position:absolute;
+  bottom:0;left:0;right:0;height:40%;
+  background:linear-gradient(to top,var(--g3),transparent);
+  opacity:.3;
+}
+.intro-frame{
+  position:absolute;bottom:-2rem;right:-2rem;
+  width:70%;height:70%;
+  border:1px solid rgba(184,146,42,.12);
+  pointer-events:none;z-index:-1;
+}
+.intro-badge{
+  position:absolute;bottom:2rem;left:2rem;
+  width:80px;height:80px;border-radius:50%;
+  background:var(--g);display:flex;align-items:center;justify-content:center;
+  flex-direction:column;gap:2px;
+}
+.intro-badge-n{font-family:var(--ff-serif);font-size:1.4rem;color:var(--ink);line-height:1}
+.intro-badge-l{font-size:.4rem;letter-spacing:.2em;text-transform:uppercase;color:var(--ink);opacity:.7}
+.intro-text p{
+  font-size:.92rem;color:rgba(242,240,236,.55);
+  line-height:2;margin-bottom:1.6rem;
+}
+.intro-awards{
+  margin-top:3rem;padding-top:2rem;
+  border-top:1px solid var(--ink4);
+  display:flex;flex-direction:column;gap:.8rem;
+}
+.award-row{
+  display:flex;align-items:center;gap:1rem;
+  font-size:.7rem;
+}
+.award-year{color:var(--g);letter-spacing:.1em;min-width:44px}
+.award-name{color:rgba(242,240,236,.5);letter-spacing:.04em}
+
+/* ─── SERVICES ─── */
+#services{background:var(--ink3)}
+.svc-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  margin-top:4rem;border:1px solid var(--ink4);
+}
+.svc{
+  position:relative;overflow:hidden;
+  padding:3.5rem;border-right:1px solid var(--ink4);
+  transition:border-color .4s;
+}
+.svc:last-child{border-right:none}
+.svc-photo{
+  position:absolute;inset:0;
+  background-size:cover;background-position:center;
+  opacity:.12;
+  transition:opacity .6s,transform .8s cubic-bezier(.25,.46,.45,.94);
+}
+.svc:hover .svc-photo{opacity:.22;transform:scale(1.05)}
+.svc>*:not(.svc-photo){position:relative;z-index:1}
+.svc-ico{
+  width:44px;height:44px;border:1px solid var(--ink4);
+  display:flex;align-items:center;justify-content:center;
+  margin-bottom:2.5rem;transition:border-color .3s;
+}
+.svc:hover .svc-ico{border-color:var(--g)}
+.svc-ico svg{width:20px;height:20px;stroke:var(--g);fill:none;stroke-width:1.5}
+.svc-title{
+  font-family:var(--ff-serif);font-size:1.35rem;font-weight:400;
+  margin-bottom:1rem;
+}
+.svc-body{font-size:.82rem;color:rgba(242,240,236,.45);line-height:1.9}
+.svc-num{
+  font-family:var(--ff-serif);font-size:3.5rem;color:rgba(184,146,42,.08);
+  margin-top:2.5rem;line-height:1;
+}
+
+/* ─── FILM / REEL ─── */
+#film{background:var(--ink2)}
+.film-inner{
+  display:grid;grid-template-columns:5fr 4fr;
+  gap:5rem;align-items:center;
+}
+.reel{
+  position:relative;aspect-ratio:16/9;
+  background:var(--ink3);overflow:hidden;cursor:pointer;
+}
+.reel-bg{
+  position:absolute;inset:0;
+  background:linear-gradient(135deg,#080e18 0%,#0e1c30 40%,#182844 70%,#080808 100%);
+}
+.reel-scanlines{
+  position:absolute;inset:0;
+  background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,.06) 3px,rgba(0,0,0,.06) 4px);
+  pointer-events:none;
+}
+.reel-play{
+  position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:2;
+}
+.play-ring{
+  width:72px;height:72px;border-radius:50%;
+  border:1px solid rgba(184,146,42,.6);
+  display:flex;align-items:center;justify-content:center;
+  transition:.4s var(--ease);background:rgba(8,8,8,.4);
+}
+.reel:hover .play-ring{background:var(--g);border-color:var(--g);transform:scale(1.12)}
+.play-ring svg{fill:var(--g);width:18px;transition:.3s}
+.reel:hover .play-ring svg{fill:var(--ink)}
+.reel-meta{
+  position:absolute;bottom:0;left:0;right:0;z-index:2;
+  padding:1.2rem 1.5rem;
+  background:linear-gradient(transparent,rgba(8,8,8,.9));
+  display:flex;justify-content:space-between;align-items:flex-end;
+}
+.reel-title{font-family:var(--ff-serif);font-size:.95rem}
+.reel-dur{font-size:.6rem;letter-spacing:.25em;color:var(--g)}
+.film-text p{font-size:.9rem;color:rgba(242,240,236,.5);line-height:2;margin-bottom:1.5rem}
+.reel-list{margin-top:2.5rem;display:flex;flex-direction:column;gap:0;border:1px solid var(--ink4)}
+.reel-item{
+  display:flex;align-items:center;gap:1.5rem;
+  padding:1rem 1.4rem;border-bottom:1px solid var(--ink4);
+  cursor:pointer;transition:.25s;
+}
+.reel-item:last-child{border-bottom:none}
+.reel-item:hover{background:var(--ink3)}
+.ri-idx{font-size:.58rem;letter-spacing:.2em;color:var(--fog);min-width:20px}
+.ri-name{font-size:.8rem;flex:1}
+.ri-dur{font-size:.62rem;letter-spacing:.15em;color:var(--g)}
+.ri-arr{color:var(--fog);font-size:.7rem;transition:.2s}
+.reel-item:hover .ri-arr{color:var(--g);transform:translateX(3px)}
+
+/* ─── PROCESS ─── */
+#process{background:var(--ink)}
+.proc-grid{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  gap:0;margin-top:4rem;
+}
+.proc{
+  padding:3rem 2.5rem;position:relative;
+  border-right:1px solid var(--ink4);
+}
+.proc:last-child{border-right:none}
+.proc::before{
+  content:attr(data-n);
+  position:absolute;top:2rem;right:1.5rem;
+  font-family:var(--ff-serif);font-size:5rem;color:rgba(184,146,42,.05);
+  line-height:1;
+}
+.proc-num{
+  font-family:var(--ff-serif);font-size:.75rem;color:var(--g);
+  letter-spacing:.2em;margin-bottom:1.5rem;
+}
+.proc-title{font-family:var(--ff-serif);font-size:1.2rem;font-weight:400;margin-bottom:.8rem}
+.proc-body{font-size:.8rem;color:rgba(242,240,236,.45);line-height:1.85}
+.proc-arrow{
+  margin-top:2rem;font-size:1.2rem;color:rgba(184,146,42,.3);
+}
+
+/* ─── BRANDS ─── */
+#brands{background:var(--ink3);padding:5rem 3.5rem;text-align:center}
+.brands-label{font-size:.6rem;letter-spacing:.4em;text-transform:uppercase;color:var(--fog);margin-bottom:3rem}
+.brands{
+  display:flex;flex-wrap:wrap;justify-content:center;
+  align-items:center;gap:0;
+}
+.brand{
+  padding:1.5rem 2.8rem;
+  font-family:var(--ff-serif);font-size:1rem;
+  letter-spacing:.22em;text-transform:uppercase;
+  color:rgba(242,240,236,.12);
+  transition:color .3s;cursor:default;
+  border-right:1px solid rgba(255,255,255,.04);
+}
+.brand:hover{color:var(--g)}
+
+/* ─── CONTACT ─── */
+#contact{background:var(--ink)}
+.contact-grid{
+  display:grid;grid-template-columns:5fr 6fr;
+  gap:6rem;align-items:start;
+}
+.contact-info p{font-size:.88rem;color:rgba(242,240,236,.5);line-height:2;margin-bottom:3rem}
+.contact-links{display:flex;flex-direction:column;gap:1.4rem}
+.cl-row{
+  display:flex;align-items:baseline;gap:1.2rem;
+  padding-bottom:1.4rem;border-bottom:1px solid var(--ink4);
+}
+.cl-row:last-child{border-bottom:none}
+.cl-k{font-size:.58rem;letter-spacing:.25em;text-transform:uppercase;color:var(--g);min-width:56px}
+.cl-v{font-size:.84rem;color:rgba(242,240,236,.6)}
+.form{display:flex;flex-direction:column;gap:1.2rem}
+.fg{display:flex;flex-direction:column;gap:.4rem}
+.fg label{font-size:.58rem;letter-spacing:.25em;text-transform:uppercase;color:var(--fog)}
+.fg input,.fg textarea,.fg select{
+  background:var(--ink2);border:1px solid var(--ink4);
+  color:var(--paper);padding:.9rem 1.1rem;
+  font-size:.85rem;font-family:var(--ff-sans);
+  outline:none;width:100%;transition:.25s;
+  -webkit-appearance:none;
+}
+.fg input:focus,.fg textarea:focus,.fg select:focus{border-color:var(--g)}
+.fg textarea{min-height:120px;resize:vertical}
+.fg select option{background:var(--ink2)}
+.fg-row{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem}
+.form-submit{
+  display:inline-flex;align-items:center;gap:.8rem;
+  padding:1rem 2.2rem;font-size:.68rem;letter-spacing:.22em;
+  text-transform:uppercase;background:var(--g);color:var(--ink);
+  border:1px solid var(--g);cursor:pointer;font-family:var(--ff-sans);
+  transition:.3s;align-self:flex-start;
+}
+.form-submit:hover{background:var(--g2);border-color:var(--g2)}
+
+/* ─── FOOTER ─── */
+footer{
+  background:#000;
+  padding:3rem 3.5rem;
+  display:grid;
+  grid-template-columns:1fr auto 1fr;
+  align-items:center;gap:2rem;
+}
+.ft-logo{
+  font-family:var(--ff-serif);font-size:.9rem;
+  letter-spacing:.3em;text-transform:uppercase;color:var(--g);
+}
+.ft-logo span{
+  display:block;font-size:.5rem;letter-spacing:.4em;
+  color:rgba(255,255,255,.2);margin-top:3px;
+}
+.ft-copy{
+  font-size:.6rem;letter-spacing:.12em;color:rgba(255,255,255,.15);
+  text-align:center;
+}
+.ft-social{
+  display:flex;justify-content:flex-end;gap:2rem;
+}
+.ft-social a{
+  font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;
+  color:rgba(255,255,255,.2);text-decoration:none;transition:.25s;
+}
+.ft-social a:hover{color:var(--g)}
+
+/* ─── RESPONSIVE ─── */
+@media(max-width:1024px){
+  .intro-grid,.film-inner,.contact-grid{grid-template-columns:1fr}
+  .proc-grid{grid-template-columns:1fr 1fr}
+  .proc:nth-child(2){border-right:none}
+  .proc:nth-child(3){border-top:1px solid var(--ink4)}
+  .proc:nth-child(4){border-top:1px solid var(--ink4);border-right:none}
+  .hero-stats{display:none}
+  .svc-grid{grid-template-columns:1fr}
+  .svc{border-right:none;border-bottom:1px solid var(--ink4)}
+  .svc:last-child{border-bottom:none}
+  footer{grid-template-columns:1fr 1fr;grid-template-rows:auto auto}
+  .ft-copy{grid-column:span 2;order:3}
+}
+@media(max-width:768px){
+  .sec,.intro-grid,.film-inner,.contact-grid{padding-left:1.5rem;padding-right:1.5rem}
+  #nav{padding:1rem 1.5rem}
+  #nav.solid{padding:.8rem 1.5rem}
+  .nav-links,.nav-cta{display:none}
+  .nav-burger{display:flex}
+  #hero{padding-bottom:5rem}
+  .hero-content{padding:100px 1.5rem 5rem}
+  .hero-scroll{right:1.5rem}
+  .gallery{grid-template-columns:1fr 1fr;grid-auto-rows:180px}
+  .gi:nth-child(n){grid-column:span 1;grid-row:span 1}
+  .gi:nth-child(1){grid-column:span 2}
+  .intro-frame{display:none}
+  .brands{gap:0}
+  .brand{padding:1.2rem 1.5rem;font-size:.85rem}
+  footer{grid-template-columns:1fr;text-align:center}
+  .ft-social{justify-content:center}
+  .ft-copy{grid-column:auto}
+  .proc-grid{grid-template-columns:1fr}
+  .proc{border-right:none;border-bottom:1px solid var(--ink4)}
+  .proc:last-child{border-bottom:none}
+  .fg-row{grid-template-columns:1fr}
+  .sec{padding:5rem 1.5rem}
+  #brands{padding:4rem 1.5rem}
+}
+</style>
+</head>
+<body>
+
+<!-- Cursor -->
+<div class="cur" id="cur"></div>
+<div class="cur-ring" id="cur-ring"></div>
+
+<!-- Loader -->
+<div id="loader">
+  <div class="loader-logo">Yuya Fujii</div>
+  <div class="loader-bar-wrap"><div class="loader-bar" id="lbar"></div></div>
+  <div class="loader-num" id="lnum">0%</div>
+</div>
+
+<!-- Nav -->
+<nav id="nav">
+  <a class="nav-logo" href="#hero">
+    Yuya Fujii
+    <span>Automotive Photographer &amp; Filmmaker</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#work">Works</a></li>
+    <li><a href="#film">Film</a></li>
+    <li><a href="#intro">About</a></li>
+    <li><a href="#services">Services</a></li>
+  </ul>
+  <a class="nav-cta" href="#contact">Book a Shoot</a>
+  <button class="nav-burger" onclick="burgerToggle()" aria-label="menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-vert"></div>
+
+  <!-- Aston Martin silhouette SVG -->
+  <svg class="hero-car" viewBox="0 0 900 380" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:none">
+    <!-- body -->
+    <path d="M 40 280 L 40 240 Q 50 205 100 190 L 180 178 Q 235 162 295 148 L 430 122 Q 495 110 565 116 L 668 126 Q 726 133 766 150 L 818 163 Q 852 178 858 212 L 862 250 L 862 280 Z" fill="rgba(184,146,42,.7)"/>
+    <!-- roof -->
+    <path d="M 295 148 L 430 122 Q 495 110 565 116 L 668 126 Q 726 133 766 150 L 740 125 Q 690 105 600 96 L 490 88 Q 420 82 355 96 L 260 118 Z" fill="rgba(184,146,42,.4)"/>
+    <!-- windshield -->
+    <path d="M 355 96 L 430 122 L 295 148 Z" fill="rgba(184,146,42,.15)"/>
+    <path d="M 430 122 L 560 116 L 668 126 L 740 125 L 600 96 L 490 88 Z" fill="rgba(184,146,42,.1)"/>
+    <!-- wheels -->
+    <circle cx="210" cy="282" r="54" stroke="rgba(184,146,42,.55)" stroke-width="14" fill="rgba(184,146,42,.05)"/>
+    <circle cx="210" cy="282" r="26" fill="rgba(184,146,42,.18)"/>
+    <circle cx="680" cy="282" r="54" stroke="rgba(184,146,42,.55)" stroke-width="14" fill="rgba(184,146,42,.05)"/>
+    <circle cx="680" cy="282" r="26" fill="rgba(184,146,42,.18)"/>
+    <!-- headlight -->
+    <ellipse cx="858" cy="216" rx="7" ry="16" fill="rgba(255,240,180,.55)"/>
+    <ellipse cx="858" cy="216" rx="14" ry="22" fill="rgba(255,240,180,.06)"/>
+    <!-- grill lines -->
+    <line x1="850" y1="228" x2="850" y2="262" stroke="rgba(184,146,42,.25)" stroke-width="1.5"/>
+    <line x1="856" y1="225" x2="856" y2="265" stroke="rgba(184,146,42,.2)" stroke-width="1.5"/>
+    <!-- ground shadow -->
+    <ellipse cx="445" cy="336" rx="380" ry="18" fill="rgba(184,146,42,.06)"/>
+  </svg>
+
+  <div class="hero-content">
+    <p class="hero-eyebrow">Automotive Photography · Cinematography</p>
+    <h1 class="hero-h1">
+      <span class="line"><span>Luxury</span></span>
+      <span class="line"><span>Immortalised</span></span>
+      <span class="line"><span>in Light</span></span>
+    </h1>
+    <p class="hero-body">
+      アストンマーチン、ポルシェ、フェラーリ——<br>
+      最高峰の機械美を、最高の一枚に。<br>
+      東京を拠点に世界で活動。
+    </p>
+    <div class="hero-actions">
+      <a href="#work" class="btn btn-outline">View Portfolio <span class="btn-arr">→</span></a>
+      <a href="#contact" class="btn btn-ghost">Book a Shoot</a>
+    </div>
+  </div>
+
+  <div class="hero-stats">
+    <div>
+      <div class="hstat-n">8+</div>
+      <div class="hstat-l">Years</div>
+    </div>
+    <div>
+      <div class="hstat-n">320</div>
+      <div class="hstat-l">Projects</div>
+    </div>
+    <div>
+      <div class="hstat-n">40+</div>
+      <div class="hstat-l">Brands</div>
+    </div>
+  </div>
+
+  <div class="hero-scroll">Scroll</div>
+</section>
+
+<!-- Marquee -->
+<div class="marquee-strip">
+  <div class="marquee-inner">
+    <span class="marquee-item">Aston Martin</span><span class="marquee-dot">·</span>
+    <span class="marquee-item">Porsche</span><span class="marquee-dot">·</span>
+    <span class="marquee-item">Ferrari</span><span class="marquee-dot">·</span>
+    <span class="marquee-item">McLaren</span><span class="marquee-dot">·</span>
+    <span class="marquee-item">Lamborghini</span><span class="marquee-dot">·</span>
+    <span class="marquee-item">Bentley</span><span class="marquee-dot">·</span>
+    <span class="marquee-item">Rolls-Royce</span><span class="marquee-dot">·</span>
+    <span class="marquee-item">Maserati</span><span class="marquee-dot">·</span>
+    <!-- duplicate for seamless loop -->
+    <span class="marquee-item">Aston Martin</span><span class="marquee-dot">·</span>
+    <span class="marquee-item">Porsche</span><span class="marquee-dot">·</span>
+    <span class="marquee-item">Ferrari</span><span class="marquee-dot">·</span>
+    <span class="marquee-item">McLaren</span><span class="marquee-dot">·</span>
+    <span class="marquee-item">Lamborghini</span><span class="marquee-dot">·</span>
+    <span class="marquee-item">Bentley</span><span class="marquee-dot">·</span>
+    <span class="marquee-item">Rolls-Royce</span><span class="marquee-dot">·</span>
+    <span class="marquee-item">Maserati</span><span class="marquee-dot">·</span>
+  </div>
+</div>
+
+<!-- WORK -->
+<section id="work" class="sec">
+  <div class="work-top">
+    <div>
+      <p class="sec-tag">Selected Works</p>
+      <h2 class="sec-h">Portfolio</h2>
+      <div class="rule"></div>
+    </div>
+    <div class="pills">
+      <button class="pill on" onclick="filterWork(this,'all')">All</button>
+      <button class="pill" onclick="filterWork(this,'aston-martin')">Aston Martin</button>
+      <button class="pill" onclick="filterWork(this,'porsche')">Porsche</button>
+      <button class="pill" onclick="filterWork(this,'film')">Film</button>
+    </div>
+    <div class="pills sub-pills" id="am-subpills" style="display:none;margin-top:.8rem">
+      <button class="pill on" onclick="filterSub(this,'all')">All</button>
+      <button class="pill" onclick="filterSub(this,'db12')">DB12</button>
+      <button class="pill" onclick="filterSub(this,'vantage')">Vantage</button>
+      <button class="pill" onclick="filterSub(this,'dbx')">DBX</button>
+    </div>
+  </div>
+
+  <div class="gallery">
+
+    <div class="gi" data-cat="porsche">
+      <div class="gi-bg ph1"></div>
+      <div class="ph-label"><span class="ph-label-car">Porsche 992 GT3 RS</span><span class="ph-label-type">Photo · 2024</span></div>
+      <div class="gi-num">001</div>
+      <div class="gi-ov"><h3>Porsche 992 GT3 RS</h3><p>Photo · 2024</p></div>
+    </div>
+
+    <div class="gi" data-cat="porsche">
+      <div class="gi-bg ph2"></div>
+      <div class="ph-label"><span class="ph-label-car">Porsche 992 GT3 RS</span><span class="ph-label-type">Photo · 2024</span></div>
+      <div class="gi-num">002</div>
+      <div class="gi-ov"><h3>Porsche 992 GT3 RS</h3><p>Photo · 2024</p></div>
+    </div>
+
+    <div class="gi" data-cat="aston-martin" data-subcat="db12">
+      <div class="gi-bg ph3"></div>
+      <div class="ph-label"><span class="ph-label-car">Aston Martin DB12</span><span class="ph-label-type">Photo · 2024</span></div>
+      <div class="gi-num">003</div>
+      <div class="gi-ov"><h3>Aston Martin DB12</h3><p>Photo · 2024</p></div>
+    </div>
+
+    <div class="gi" data-cat="aston-martin" data-subcat="db12">
+      <div class="gi-bg ph4"></div>
+      <div class="ph-label"><span class="ph-label-car">Aston Martin DB12</span><span class="ph-label-type">Photo · 2024</span></div>
+      <div class="gi-num">004</div>
+      <div class="gi-ov"><h3>Aston Martin DB12</h3><p>Photo · 2024</p></div>
+    </div>
+
+    <div class="gi" data-cat="aston-martin" data-subcat="db12">
+      <div class="gi-bg ph5"></div>
+      <div class="ph-label"><span class="ph-label-car">Aston Martin DB12</span><span class="ph-label-type">Photo · 2024</span></div>
+      <div class="gi-num">005</div>
+      <div class="gi-ov"><h3>Aston Martin DB12</h3><p>Photo · 2024</p></div>
+    </div>
+
+    <div class="gi" data-cat="aston-martin" data-subcat="db12">
+      <div class="gi-bg ph6"></div>
+      <div class="ph-label"><span class="ph-label-car">Aston Martin DB12</span><span class="ph-label-type">Photo · 2024</span></div>
+      <div class="gi-num">006</div>
+      <div class="gi-ov"><h3>Aston Martin DB12</h3><p>Photo · 2024</p></div>
+    </div>
+
+    <div class="gi" data-cat="film" style="overflow:hidden;display:flex;align-items:center;justify-content:center;background:#111;">
+      <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DQoSJlEE7la/" data-instgrm-version="14" style="max-width:320px;width:100%;margin:0;border:none;"></blockquote>
+      <div class="gi-num">007</div>
+    </div>
+
+    <div class="gi" data-cat="photo">
+      <div class="gi-bg ph8"></div>
+      <div class="ph-label"><span class="ph-label-car">Photo</span><span class="ph-label-type">2024</span></div>
+      <div class="gi-num">008</div>
+      <div class="gi-ov"><h3>Photo</h3><p>2024</p></div>
+    </div>
+
+    <div class="gi" data-cat="porsche">
+      <div class="gi-bg ph9"></div>
+      <div class="ph-label"><span class="ph-label-car">Porsche 992 GT3 RS</span><span class="ph-label-type">Photo · 2024</span></div>
+      <div class="gi-num">009</div>
+      <div class="gi-ov"><h3>Porsche 992 GT3 RS</h3><p>Photo · 2024</p></div>
+    </div>
+
+    <div class="gi" data-cat="porsche">
+      <div class="gi-bg ph10"></div>
+      <div class="ph-label"><span class="ph-label-car">Porsche 992 GT3 RS</span><span class="ph-label-type">Photo · 2024</span></div>
+      <div class="gi-num">010</div>
+      <div class="gi-ov"><h3>Porsche 992 GT3 RS</h3><p>Photo · 2024</p></div>
+    </div>
+
+    <div class="gi" data-cat="porsche">
+      <div class="gi-bg ph11"></div>
+      <div class="ph-label"><span class="ph-label-car">Porsche 992 GT3 RS</span><span class="ph-label-type">Photo · 2024</span></div>
+      <div class="gi-num">011</div>
+      <div class="gi-ov"><h3>Porsche 992 GT3 RS</h3><p>Photo · 2024</p></div>
+    </div>
+
+    <div class="gi" data-cat="porsche">
+      <div class="gi-bg ph12"></div>
+      <div class="ph-label"><span class="ph-label-car">Porsche 992 GT3 RS</span><span class="ph-label-type">Photo · 2024</span></div>
+      <div class="gi-num">012</div>
+      <div class="gi-ov"><h3>Porsche 992 GT3 RS</h3><p>Photo · 2024</p></div>
+    </div>
+
+    <div class="gi" data-cat="porsche">
+      <div class="gi-bg ph13"></div>
+      <div class="ph-label"><span class="ph-label-car">Porsche 992 GT3 RS</span><span class="ph-label-type">Photo · 2024</span></div>
+      <div class="gi-num">013</div>
+      <div class="gi-ov"><h3>Porsche 992 GT3 RS</h3><p>Photo · 2024</p></div>
+    </div>
+
+    <div class="gi" data-cat="porsche">
+      <div class="gi-bg ph14"></div>
+      <div class="ph-label"><span class="ph-label-car">Porsche 992 GT3 RS</span><span class="ph-label-type">Photo · 2024</span></div>
+      <div class="gi-num">014</div>
+      <div class="gi-ov"><h3>Porsche 992 GT3 RS</h3><p>Photo · 2024</p></div>
+    </div>
+
+    <div class="gi" data-cat="porsche">
+      <div class="gi-bg ph15"></div>
+      <div class="ph-label"><span class="ph-label-car">Porsche 992 GT3 RS</span><span class="ph-label-type">Photo · 2024</span></div>
+      <div class="gi-num">015</div>
+      <div class="gi-ov"><h3>Porsche 992 GT3 RS</h3><p>Photo · 2024</p></div>
+    </div>
+
+    <div class="gi" data-cat="porsche">
+      <div class="gi-bg ph16"></div>
+      <div class="ph-label"><span class="ph-label-car">Porsche 992 GT3 RS</span><span class="ph-label-type">Photo · 2024</span></div>
+      <div class="gi-num">016</div>
+      <div class="gi-ov"><h3>Porsche 992 GT3 RS</h3><p>Photo · 2024</p></div>
+    </div>
+
+    <div class="gi" data-cat="aston-martin" data-subcat="vantage">
+      <div class="gi-bg ph17"></div>
+      <div class="ph-label"><span class="ph-label-car">Aston Martin Vantage</span><span class="ph-label-type">Photo · 2024</span></div>
+      <div class="gi-num">017</div>
+      <div class="gi-ov"><h3>Aston Martin Vantage</h3><p>Photo · 2024</p></div>
+    </div>
+
+    <div class="gi" data-cat="aston-martin" data-subcat="vantage">
+      <div class="gi-bg ph18"></div>
+      <div class="ph-label"><span class="ph-label-car">Aston Martin Vantage</span><span class="ph-label-type">Photo · 2024</span></div>
+      <div class="gi-num">018</div>
+      <div class="gi-ov"><h3>Aston Martin Vantage</h3><p>Photo · 2024</p></div>
+    </div>
+
+    <div class="gi" data-cat="aston-martin" data-subcat="vantage">
+      <div class="gi-bg ph19"></div>
+      <div class="ph-label"><span class="ph-label-car">Aston Martin Vantage</span><span class="ph-label-type">Photo · 2024</span></div>
+      <div class="gi-num">019</div>
+      <div class="gi-ov"><h3>Aston Martin Vantage</h3><p>Photo · 2024</p></div>
+    </div>
+
+    <div class="gi" data-cat="aston-martin" data-subcat="vantage">
+      <div class="gi-bg ph20"></div>
+      <div class="ph-label"><span class="ph-label-car">Aston Martin Vantage</span><span class="ph-label-type">Photo · 2024</span></div>
+      <div class="gi-num">020</div>
+      <div class="gi-ov"><h3>Aston Martin Vantage</h3><p>Photo · 2024</p></div>
+    </div>
+
+    <div class="gi" data-cat="aston-martin" data-subcat="vantage">
+      <div class="gi-bg ph21"></div>
+      <div class="ph-label"><span class="ph-label-car">Aston Martin Vantage</span><span class="ph-label-type">Photo · 2024</span></div>
+      <div class="gi-num">021</div>
+      <div class="gi-ov"><h3>Aston Martin Vantage</h3><p>Photo · 2024</p></div>
+    </div>
+
+    <div class="gi" data-cat="porsche">
+      <div class="gi-bg ph22"></div>
+      <div class="gi-num">022</div>
+      <div class="gi-ov"><h3>Porsche 935 Martini</h3><p>Heritage · 2024</p></div>
+    </div>
+
+    <div class="gi" data-cat="porsche">
+      <div class="gi-bg ph23"></div>
+      <div class="gi-num">023</div>
+      <div class="gi-ov"><h3>Porsche 911 Classic</h3><p>Heritage · 2024</p></div>
+    </div>
+
+    <div class="gi" data-cat="aston-martin" data-subcat="dbx">
+      <div class="gi-bg ph24"></div>
+      <div class="gi-num">024</div>
+      <div class="gi-ov"><h3>Aston Martin DBX S</h3><p>Detail · 2024</p></div>
+    </div>
+
+    <div class="gi" data-cat="aston-martin" data-subcat="dbx">
+      <div class="gi-bg ph25"></div>
+      <div class="gi-num">025</div>
+      <div class="gi-ov"><h3>Aston Martin DBX S</h3><p>Showroom · 2024</p></div>
+    </div>
+
+    <div class="gi" data-cat="aston-martin" data-subcat="vantage">
+      <div class="gi-bg ph26"></div>
+      <div class="gi-num">026</div>
+      <div class="gi-ov"><h3>Aston Martin Vantage</h3><p>Harbor · 2024</p></div>
+    </div>
+
+    <div class="gi" data-cat="aston-martin" data-subcat="vantage">
+      <div class="gi-bg ph27"></div>
+      <div class="gi-num">027</div>
+      <div class="gi-ov"><h3>Aston Martin Vantage</h3><p>Sunset · 2024</p></div>
+    </div>
+
+    <div class="gi" data-cat="aston-martin" data-subcat="vantage">
+      <div class="gi-bg ph28"></div>
+      <div class="gi-num">028</div>
+      <div class="gi-ov"><h3>Aston Martin Vantage</h3><p>Harbor Side · 2024</p></div>
+    </div>
+
+    <div class="gi" data-cat="aston-martin" data-subcat="vantage">
+      <div class="gi-bg ph29"></div>
+      <div class="gi-num">029</div>
+      <div class="gi-ov"><h3>Aston Martin Vantage</h3><p>Sunset Rear · 2024</p></div>
+    </div>
+
+    <div class="gi" data-cat="aston-martin" data-subcat="db12">
+      <div class="gi-bg ph30"></div>
+      <div class="gi-num">030</div>
+      <div class="gi-ov"><h3>Aston Martin DB12</h3><p>Outdoor · 2024</p></div>
+    </div>
+
+    <div class="gi" data-cat="aston-martin" data-subcat="db12">
+      <div class="gi-bg ph31"></div>
+      <div class="gi-num">031</div>
+      <div class="gi-ov"><h3>Aston Martin DB12</h3><p>Mansion · 2024</p></div>
+    </div>
+
+    <div class="gi" data-cat="aston-martin" data-subcat="dbx">
+      <div class="gi-bg ph32"></div>
+      <div class="gi-num">032</div>
+      <div class="gi-ov"><h3>Aston Martin DBX</h3><p>Mountain · 2024</p></div>
+    </div>
+
+    <div class="gi" data-cat="aston-martin" data-subcat="dbx">
+      <div class="gi-bg ph33"></div>
+      <div class="gi-num">033</div>
+      <div class="gi-ov"><h3>Aston Martin DBX</h3><p>Landscape · 2024</p></div>
+    </div>
+
+    <div class="gi" data-cat="aston-martin" data-subcat="dbx">
+      <div class="gi-bg ph34"></div>
+      <div class="gi-num">034</div>
+      <div class="gi-ov"><h3>Aston Martin DBX</h3><p>Outdoor · 2024</p></div>
+    </div>
+
+    <div class="gi" data-cat="aston-martin" data-subcat="db12">
+      <div class="gi-bg ph35"></div>
+      <div class="gi-num">035</div>
+      <div class="gi-ov"><h3>Aston Martin DB12 Volante</h3><p>Mountain · 2024</p></div>
+    </div>
+
+    <div class="gi" data-cat="aston-martin" data-subcat="db12">
+      <div class="gi-bg ph36"></div>
+      <div class="gi-num">036</div>
+      <div class="gi-ov"><h3>Aston Martin DB12 Volante</h3><p>Cliffside · 2024</p></div>
+    </div>
+
+    <div class="gi" data-cat="aston-martin" data-subcat="db12">
+      <div class="gi-bg ph37"></div>
+      <div class="gi-num">037</div>
+      <div class="gi-ov"><h3>Aston Martin DB12</h3><p>Seaside · 2024</p></div>
+    </div>
+
+    <div class="gi" data-cat="porsche">
+      <div class="gi-bg ph38"></div>
+      <div class="gi-num">038</div>
+      <div class="gi-ov"><h3>Porsche 911</h3><p>Motion · 2024</p></div>
+    </div>
+
+    <div class="gi" data-cat="aston-martin" data-subcat="db12">
+      <div class="gi-bg ph39"></div>
+      <div class="gi-num">039</div>
+      <div class="gi-ov"><h3>Aston Martin DB12</h3><p>Night · 2024</p></div>
+    </div>
+
+    <div class="gi" data-cat="porsche">
+      <div class="gi-bg ph40"></div>
+      <div class="gi-num">040</div>
+      <div class="gi-ov"><h3>Porsche 911 GT3 RS</h3><p>Sunset · 2024</p></div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ABOUT / INTRO -->
+<section id="intro">
+  <div class="intro-grid">
+    <div style="position:relative">
+      <div class="intro-visual">
+        <div class="intro-visual-bg"></div>
+        <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center">
+          <!-- Camera icon large -->
+          <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="rgba(184,146,42,.15)" stroke-width="1" style="width:80px;height:80px">
+            <rect x="2" y="7" width="20" height="14" rx="2"/>
+            <path d="M16 7l-2-4H10L8 7"/>
+            <circle cx="12" cy="14" r="4"/>
+          </svg>
+        </div>
+        <div class="intro-badge">
+          <span class="intro-badge-n">8</span>
+          <span class="intro-badge-l">Years</span>
+        </div>
+      </div>
+      <div class="intro-frame"></div>
+    </div>
+    <div class="intro-text">
+      <p class="sec-tag">About</p>
+      <h2 class="sec-h">機械美を、<br><em style="font-style:italic;color:var(--g2)">芸術へ。</em></h2>
+      <div class="rule"></div>
+      <p>Yuya Fujii（藤井 優弥）。車業界で4年間、数々のブランドと向き合いながら、ビジュアルと言葉で価値を伝える表現を磨いてきました。</p>
+      <p>ブランドごとに異なる哲学や空気感を丁寧に読み取り、世界観を形にすることを得意としています。美しさだけで終わらない、目的に届くクリエイティブをこれからも追求していきます。</p>
+      <div class="intro-awards">
+        <div class="award-row">
+          <span class="award-year">2024</span>
+          <span class="award-name">Japan Automotive Photography Award — Gold</span>
+        </div>
+        <div class="award-row">
+          <span class="award-year">2023</span>
+          <span class="award-name">Asia Pacific Car Photographer of the Year — Finalist</span>
+        </div>
+        <div class="award-row">
+          <span class="award-year">2022</span>
+          <span class="award-name">Porsche Official Photographer — Japan</span>
+        </div>
+        <div class="award-row">
+          <span class="award-year">2021</span>
+          <span class="award-name">Aston Martin Dealer Campaign — Kobe / Osaka</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services" class="sec">
+  <p class="sec-tag">What I Offer</p>
+  <h2 class="sec-h">Services</h2>
+  <div class="rule"></div>
+  <div class="svc-grid">
+    <div class="svc">
+      <div class="svc-photo" style="background-image:url('portfolio.jp/DSC04216.jpg')"></div>
+      <div class="svc-ico">
+        <svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7l-2-4H10L8 7"/><circle cx="12" cy="14" r="3.5"/></svg>
+      </div>
+      <h3 class="svc-title">Editorial Photography</h3>
+      <p class="svc-body">雑誌・広告向けの高品質なオートモーティブ撮影。スタジオ・ロケーション両対応。ライティング設計から最終レタッチまで一貫して担当します。</p>
+      <div class="svc-num">01</div>
+    </div>
+    <div class="svc">
+      <div class="svc-photo" style="background-image:url('portfolio.jp/DSC04515.jpg')"></div>
+      <div class="svc-ico">
+        <svg viewBox="0 0 24 24"><rect x="2" y="5" width="15" height="14" rx="2"/><polygon points="17,9 22,6 22,18 17,15"/></svg>
+      </div>
+      <h3 class="svc-title">Automotive Cinematography</h3>
+      <p class="svc-body">ドローン、ジンバル、カーマウントを駆使したダイナミック映像制作。SNS向けショートフィルムからTVCMまで対応。4K/6K収録。</p>
+      <div class="svc-num">02</div>
+    </div>
+    <div class="svc">
+      <div class="svc-photo" style="background-image:url('portfolio.jp/DSC06080.jpg')"></div>
+      <div class="svc-ico">
+        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z"/></svg>
+      </div>
+      <h3 class="svc-title">Detail &amp; Owner Sessions</h3>
+      <p class="svc-body">オーナー様のための特別セッション。愛車の細部の美しさを記録し、唯一無二の作品をお届けします。プリント・デジタル納品対応。</p>
+      <div class="svc-num">03</div>
+    </div>
+  </div>
+</section>
+
+<!-- FILM -->
+<section id="film" class="sec">
+  <div class="film-inner">
+    <div>
+      <p class="sec-tag">Cinematography</p>
+      <h2 class="sec-h">Showreel<br>2025</h2>
+      <div class="rule"></div>
+      <div class="reel">
+        <video style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;" controls preload="metadata">
+          <source src="fab872ae-91e4-49fd-bc84-2b6bb0bd45e2.mp4" type="video/mp4">
+        </video>
+      </div>
+    </div>
+    <div class="film-text">
+      <p>スピード、静寂、美しさ——映像でしか伝えられない車の物語を追い続けています。</p>
+      <p>ドライビングシーン、夜景、スタジオ撮影まで、あらゆる環境で最高の映像を生み出します。</p>
+      <div class="reel-list">
+        <div class="reel-item">
+          <span class="ri-idx">01</span>
+          <span class="ri-name">Ferrari Daytona — Night Drive</span>
+          <span class="ri-arr">→</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section id="process" class="sec" style="background:var(--ink3)">
+  <p class="sec-tag">How It Works</p>
+  <h2 class="sec-h">Process</h2>
+  <div class="rule"></div>
+  <div class="proc-grid">
+    <div class="proc" data-n="01">
+      <div class="proc-num">01 / 04</div>
+      <h3 class="proc-title">Discovery</h3>
+      <p class="proc-body">ご要望・車両・ロケーション・使用目的を詳しくヒアリング。最適なコンセプトを一緒に設計します。</p>
+      <div class="proc-arrow">→</div>
+    </div>
+    <div class="proc" data-n="02">
+      <div class="proc-num">02 / 04</div>
+      <h3 class="proc-title">Pre-Production</h3>
+      <p class="proc-body">ロケハン、ライティングプラン、機材選定、撮影スケジューリング。万全の準備で当日を迎えます。</p>
+      <div class="proc-arrow">→</div>
+    </div>
+    <div class="proc" data-n="03">
+      <div class="proc-num">03 / 04</div>
+      <h3 class="proc-title">Shoot / Film</h3>
+      <p class="proc-body">こだわりの機材と構図で撮影。完璧なカットが撮れるまで妥協しません。</p>
+      <div class="proc-arrow">→</div>
+    </div>
+    <div class="proc" data-n="04">
+      <div class="proc-num">04 / 04</div>
+      <h3 class="proc-title">Delivery</h3>
+      <p class="proc-body">プロのレタッチ・カラーグレーディングを経て、高解像度データを納品。プリント対応も可能。</p>
+    </div>
+  </div>
+</section>
+
+<!-- BRANDS -->
+<section id="brands">
+  <p class="brands-label">Brands I've Worked With</p>
+  <div class="brands">
+    <span class="brand">Aston Martin</span>
+    <span class="brand">Porsche</span>
+    <span class="brand">Ferrari</span>
+    <span class="brand">McLaren</span>
+    <span class="brand">Lamborghini</span>
+    <span class="brand">Bentley</span>
+    <span class="brand">Rolls-Royce</span>
+    <span class="brand">Maserati</span>
+    <span class="brand">Bugatti</span>
+    <span class="brand">Pagani</span>
+  </div>
+</section>
+
+
+
+<!-- CONTACT -->
+<section id="contact" class="sec">
+  <div class="contact-grid">
+    <div>
+      <p class="sec-tag">Let's Create</p>
+      <h2 class="sec-h">Something<br>Extraordinary</h2>
+      <div class="rule"></div>
+      <div class="contact-info">
+        <p>撮影のご依頼・ご相談はこちらから。国内外のロケーションに対応しています。まずはお気軽にどうぞ。</p>
+      </div>
+      <div class="contact-links">
+        <div class="cl-row">
+          <span class="cl-k">Email</span>
+          <span class="cl-v">f.yuyaphotography@gmail.com</span>
+        </div>
+        <div class="cl-row">
+          <span class="cl-k">Tel</span>
+          <span class="cl-v">070-8513-3226</span>
+        </div>
+        <div class="cl-row">
+          <span class="cl-k">Base</span>
+          <span class="cl-v">Kobe / Osaka, Japan · Worldwide</span>
+        </div>
+        <div class="cl-row">
+          <span class="cl-k">IG</span>
+          <a class="cl-v" href="https://www.instagram.com/deadlift.jp/" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;border-bottom:1px solid rgba(184,146,42,.4);">@deadlift.jp</a>
+        </div>
+      </div>
+    </div>
+    <form class="form" action="https://formspree.io/f/mbdplzyp" method="POST">
+      <div class="fg-row">
+        <div class="fg"><label>お名前</label><input type="text" name="name" placeholder="山田 太郎" required/></div>
+        <div class="fg"><label>会社 / ブランド</label><input type="text" name="company" placeholder="Porsche Japan"/></div>
+      </div>
+      <div class="fg"><label>メールアドレス</label><input type="email" name="email" placeholder="taro@example.com" required/></div>
+      <div class="fg">
+        <label>撮影の種類</label>
+        <select name="shoot_type">
+          <option value="" disabled selected>選択してください</option>
+          <option>Editorial Photography</option>
+          <option>Automotive Cinematography</option>
+          <option>Detail / Owner Session</option>
+          <option>Campaign / Commercial</option>
+          <option>その他</option>
+        </select>
+      </div>
+      <div class="fg-row">
+        <div class="fg"><label>車種</label><input type="text" name="car" placeholder="Aston Martin DB12"/></div>
+        <div class="fg"><label>ご希望日</label><input type="text" name="date" placeholder="2024年〇月〇日頃"/></div>
+      </div>
+      <div class="fg"><label>メッセージ</label><textarea name="message" placeholder="撮影の詳細・ご要望をお知らせください。"></textarea></div>
+      <button type="submit" class="form-submit">Send Message <span>→</span></button>
+    </form>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="ft-logo">Yuya Fujii<span>Automotive Photographer &amp; Filmmaker</span></div>
+  <p class="ft-copy">&copy; 2024 Yuya Fujii. All rights reserved.</p>
+  <div class="ft-social">
+    <a href="#">Instagram</a>
+    <a href="#">YouTube</a>
+    <a href="#">Behance</a>
+    <a href="#">500px</a>
+  </div>
+</footer>
+
+<script>
+// ── CURSOR ──
+const cur = document.getElementById('cur');
+const ring = document.getElementById('cur-ring');
+document.addEventListener('mousemove', e => {
+  cur.style.left = e.clientX + 'px';
+  cur.style.top  = e.clientY + 'px';
+  setTimeout(() => {
+    ring.style.left = e.clientX + 'px';
+    ring.style.top  = e.clientY + 'px';
+  }, 80);
+});
+
+// ── LOADER ──
+const lbar = document.getElementById('lbar');
+const lnum  = document.getElementById('lnum');
+let prog = 0;
+const tick = setInterval(() => {
+  prog += Math.random() * 18;
+  if (prog >= 100) { prog = 100; clearInterval(tick); }
+  lbar.style.width = prog + '%';
+  lnum.textContent = Math.floor(prog) + '%';
+  if (prog === 100) {
+    setTimeout(() => document.getElementById('loader').classList.add('done'), 300);
+  }
+}, 80);
+
+// ── NAV ──
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('solid', window.scrollY > 80);
+});
+
+// ── LAYOUT ──
+const sizePattern = [
+  [7,3],[5,2],[5,2],[4,2],[4,2],[4,2],
+  [8,3],[4,2],[6,2],[6,2],[5,2],[7,2],[4,2],[4,2],[4,2],
+  [4,2],[4,2],[4,2],[6,2],[6,2],[5,2],[7,2],[4,2],
+  [4,2],[4,2],[8,3],[4,2],[4,2],[4,2],
+  [6,2],[6,2],[4,2],[4,2],[4,2],[5,2],[7,2],[4,2],[4,2],[4,2],[4,2]
+];
+function relayout() {
+  const visible = [...document.querySelectorAll('.gi')].filter(g => g.style.display !== 'none');
+  visible.forEach((gi, i) => {
+    const [col, row] = sizePattern[i % sizePattern.length];
+    gi.style.gridColumn = `span ${col}`;
+    gi.style.gridRow = `span ${row}`;
+  });
+}
+
+// ── FILTER ──
+function filterWork(btn, cat) {
+  document.querySelectorAll('.pills:not(#am-subpills) .pill').forEach(p => p.classList.remove('on'));
+  btn.classList.add('on');
+  const subpills = document.getElementById('am-subpills');
+  if (cat === 'aston-martin') {
+    subpills.style.display = 'flex';
+    document.querySelectorAll('#am-subpills .pill').forEach((p,i) => p.classList.toggle('on', i===0));
+  } else {
+    subpills.style.display = 'none';
+  }
+  document.querySelectorAll('.gi').forEach(gi => {
+    gi.style.display = (cat === 'all' || gi.dataset.cat === cat) ? '' : 'none';
+  });
+  relayout();
+}
+function filterSub(btn, subcat) {
+  document.querySelectorAll('#am-subpills .pill').forEach(p => p.classList.remove('on'));
+  btn.classList.add('on');
+  document.querySelectorAll('.gi[data-cat="aston-martin"]').forEach(gi => {
+    gi.style.display = (subcat === 'all' || gi.dataset.subcat === subcat) ? '' : 'none';
+  });
+  relayout();
+}
+relayout();
+
+// ── BURGER ──
+function burgerToggle() {
+  const links = document.querySelector('.nav-links');
+  const cta   = document.querySelector('.nav-cta');
+  const open  = links.style.display === 'flex';
+  if (open) {
+    links.style.cssText = '';
+    cta.style.display = '';
+  } else {
+    Object.assign(links.style, {
+      display:'flex', flexDirection:'column', position:'fixed',
+      inset:'0', background:'rgba(8,8,8,.97)', alignItems:'center',
+      justifyContent:'center', gap:'3rem', fontSize:'1.4rem', zIndex:'700'
+    });
+    cta.style.display = 'none';
+    links.querySelectorAll('a').forEach(a => {
+      a.onclick = () => { links.style.cssText = ''; };
+    });
+  }
+}
+
+// ── SMOOTH REVEAL on scroll ──
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.style.opacity = '1';
+      e.target.style.transform = 'none';
+    }
+  });
+}, {threshold: .1});
+document.querySelectorAll('.gi, .svc, .proc, .reel-item, .award-row').forEach(el => {
+  el.style.opacity = '0';
+  el.style.transform = 'translateY(24px)';
+  el.style.transition = 'opacity .7s var(--ease), transform .7s var(--ease)';
+  io.observe(el);
+});
+</script>
+<script async src="//www.instagram.com/embed.js"></script>
+</body>
+</html>
