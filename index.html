@@ -331,46 +331,9 @@ body:has(a:hover) .cur-ring,body:has(button:hover) .cur-ring{width:56px;height:5
   font-size:.55rem;letter-spacing:.25em;color:rgba(255,255,255,.25);
 }
 
-/* placeholder gradients */
-.ph1{background:url('portfolio.jp/DSC05884.jpg') center/cover no-repeat}
-.ph2{background:url('portfolio.jp/DSC05993.jpg') center/cover no-repeat}
-.ph3{background:url('portfolio.jp/DSC06080.jpg') center/cover no-repeat}
-.ph4{background:url('portfolio.jp/DSC06116.jpg') center/cover no-repeat}
-.ph5{background:url('portfolio.jp/DSC06181.jpg') center/cover no-repeat}
-.ph6{background:url('portfolio.jp/DSC04310.jpg') center/cover no-repeat}
+/* placeholder — images loaded lazily via JS */
 .ph7{background:linear-gradient(125deg,#0a1414 0%,#122020 40%,#1a3030 65%,#060e0e 100%)}
-.ph8{background:url('portfolio.jp/DSC08113.jpg') center/cover no-repeat}
-.ph9{background:url('portfolio.jp/DSC08097.jpg') center/cover no-repeat}
-.ph10{background:url('portfolio.jp/DSC03278.jpg') center/cover no-repeat}
-.ph11{background:url('portfolio.jp/DSC03317.jpg') center/cover no-repeat}
-.ph12{background:url('portfolio.jp/DSC03705.jpg') center/cover no-repeat}
-.ph13{background:url('portfolio.jp/DSC03950.jpg') center/cover no-repeat}
-.ph14{background:url('portfolio.jp/DSC04349.jpg') center/cover no-repeat}
-.ph15{background:url('portfolio.jp/DSC04347.jpg') center/cover no-repeat}
-.ph16{background:url('portfolio.jp/DSC05234.jpg') center/cover no-repeat}
-.ph17{background:url('portfolio.jp/DSC03870.jpg') center/cover no-repeat}
-.ph18{background:url('portfolio.jp/DSC03887.jpg') center/cover no-repeat}
-.ph19{background:url('portfolio.jp/DSC04771.jpg') center/cover no-repeat}
-.ph20{background:url('portfolio.jp/DSC04774.jpg') center/cover no-repeat}
-.ph21{background:url('portfolio.jp/DSC04806.jpg') center/cover no-repeat}
-.ph22{background:url('portfolio.jp/DSC08114.jpg') center/cover no-repeat}
-.ph23{background:url('portfolio.jp/DSC08125.jpg') center/cover no-repeat}
-.ph24{background:url('portfolio.jp/DSC08139.jpg') center/cover no-repeat}
-.ph25{background:url('portfolio.jp/DSC08157.jpg') center/cover no-repeat}
-.ph26{background:url('portfolio.jp/DSC08174.jpg') center/cover no-repeat}
-.ph27{background:url('portfolio.jp/DSC08253-Edit.jpg') center/cover no-repeat}
-.ph28{background:url('portfolio.jp/DSC08258.jpg') center/cover no-repeat}
-.ph29{background:url('portfolio.jp/DSC08284-Edit.jpg') center/cover no-repeat}
-.ph30{background:url('portfolio.jp/DSC04212.jpg') center/cover no-repeat}
-.ph31{background:url('portfolio.jp/DSC04216.jpg') center/cover no-repeat}
-.ph32{background:url('portfolio.jp/DSC04229.jpg') center/cover no-repeat}
-.ph33{background:url('portfolio.jp/DSC04247.jpg') center/cover no-repeat}
-.ph34{background:url('portfolio.jp/DSC04250-2.jpg') center/cover no-repeat}
-.ph35{background:url('portfolio.jp/DSC04271.jpg') center/cover no-repeat}
-.ph36{background:url('portfolio.jp/DSC04275.jpg') center/cover no-repeat}
-.ph37{background:url('portfolio.jp/DSC04300.jpg') center/cover no-repeat}
-.ph38{background:url('portfolio.jp/DSC04440.jpg') center/cover no-repeat}
-.ph39{background:url('portfolio.jp/DSC04515.jpg') center/cover no-repeat}
+.gi-bg{background:#111}
 .ph40{background:url('portfolio.jp/DSC05254.jpg') center/cover no-repeat}
 .ph-label{
   position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
@@ -1411,6 +1374,43 @@ function burgerToggle() {
     });
   }
 }
+
+// ── LAZY LOAD background images ──
+const bgMap = {
+  ph1:'portfolio.jp/DSC05884.jpg', ph2:'portfolio.jp/DSC05993.jpg',
+  ph3:'portfolio.jp/DSC06080.jpg', ph4:'portfolio.jp/DSC06116.jpg',
+  ph5:'portfolio.jp/DSC06181.jpg', ph6:'portfolio.jp/DSC04310.jpg',
+  ph8:'portfolio.jp/DSC08113.jpg', ph9:'portfolio.jp/DSC08097.jpg',
+  ph10:'portfolio.jp/DSC03278.jpg', ph11:'portfolio.jp/DSC03317.jpg',
+  ph12:'portfolio.jp/DSC03705.jpg', ph13:'portfolio.jp/DSC03950.jpg',
+  ph14:'portfolio.jp/DSC04349.jpg', ph15:'portfolio.jp/DSC04347.jpg',
+  ph16:'portfolio.jp/DSC05234.jpg', ph17:'portfolio.jp/DSC03870.jpg',
+  ph18:'portfolio.jp/DSC03887.jpg', ph19:'portfolio.jp/DSC04771.jpg',
+  ph20:'portfolio.jp/DSC04774.jpg', ph21:'portfolio.jp/DSC04806.jpg',
+  ph22:'portfolio.jp/DSC08114.jpg', ph23:'portfolio.jp/DSC08125.jpg',
+  ph24:'portfolio.jp/DSC08139.jpg', ph25:'portfolio.jp/DSC08157.jpg',
+  ph26:'portfolio.jp/DSC08174.jpg', ph27:'portfolio.jp/DSC08253-Edit.jpg',
+  ph28:'portfolio.jp/DSC08258.jpg', ph29:'portfolio.jp/DSC08284-Edit.jpg',
+  ph30:'portfolio.jp/DSC04212.jpg', ph31:'portfolio.jp/DSC04216.jpg',
+  ph32:'portfolio.jp/DSC04229.jpg', ph33:'portfolio.jp/DSC04247.jpg',
+  ph34:'portfolio.jp/DSC04250-2.jpg', ph35:'portfolio.jp/DSC04271.jpg',
+  ph36:'portfolio.jp/DSC04275.jpg', ph37:'portfolio.jp/DSC04300.jpg',
+  ph38:'portfolio.jp/DSC04440.jpg', ph39:'portfolio.jp/DSC04515.jpg'
+};
+const lazyObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (!e.isIntersecting) return;
+    const el = e.target;
+    const cls = Array.from(el.classList).find(c => bgMap[c]);
+    if (cls) {
+      el.style.backgroundImage = `url('${bgMap[cls]}')`;
+      el.style.backgroundSize = 'cover';
+      el.style.backgroundPosition = 'center';
+    }
+    lazyObs.unobserve(el);
+  });
+}, {rootMargin: '300px'});
+document.querySelectorAll('.gi-bg').forEach(el => lazyObs.observe(el));
 
 // ── SMOOTH REVEAL on scroll ──
 const io = new IntersectionObserver((entries) => {
