@@ -1167,9 +1167,6 @@ footer{
       <h2 class="sec-h">Showreel<br>2025</h2>
       <div class="rule"></div>
       <div class="reel">
-        <video style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;" controls preload="metadata">
-          <source src="fab872ae-91e4-49fd-bc84-2b6bb0bd45e2.mp4" type="video/mp4">
-        </video>
       </div>
     </div>
     <div class="film-text">
@@ -1367,7 +1364,8 @@ function filterWork(btn, cat) {
     subpills.style.display = 'none';
   }
   document.querySelectorAll('.gi').forEach(gi => {
-    gi.style.display = (cat === 'all' || gi.dataset.cat === cat) ? '' : 'none';
+    const isFilm = gi.dataset.cat === 'film';
+    gi.style.display = (cat === 'all' ? !isFilm : gi.dataset.cat === cat) ? '' : 'none';
   });
   relayout();
 }
@@ -1379,7 +1377,7 @@ function filterSub(btn, subcat) {
   });
   relayout();
 }
-relayout();
+filterWork(document.querySelector('.pills:not(#am-subpills) .pill.on'), 'all');
 
 // ── BURGER ──
 function burgerToggle() {
