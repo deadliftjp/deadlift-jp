@@ -616,6 +616,8 @@ footer{
   .ft-copy{grid-column:span 2;order:3}
 }
 @media(max-width:768px){
+  .pricing-grid{grid-template-columns:1fr!important}
+  .pricing-grid>div{border-right:none!important;border-bottom:1px solid var(--ink4)}
   .sec,.intro-grid,.film-inner,.contact-grid{padding-left:1.5rem;padding-right:1.5rem}
   #nav{padding:1rem 1.5rem}
   #nav.solid{padding:.8rem 1.5rem}
@@ -1130,6 +1132,57 @@ footer{
       <div class="svc-num">03</div>
     </div>
   </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing" class="sec" style="background:var(--ink2)">
+  <p class="sec-tag">Pricing</p>
+  <h2 class="sec-h">料金プラン</h2>
+  <div class="rule"></div>
+  <div class="pricing-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:1px solid var(--ink4);margin-top:2rem">
+
+    <div style="padding:3rem;border-right:1px solid var(--ink4);transition:background .3s" onmouseenter="this.style.background='rgba(184,146,42,.04)'" onmouseleave="this.style.background=''">
+      <p style="font-size:.6rem;letter-spacing:.3em;text-transform:uppercase;color:var(--g);margin-bottom:1.5rem">Photography</p>
+      <div style="font-family:var(--ff-serif);font-size:2.8rem;color:var(--paper);line-height:1">¥40,000<span style="font-size:1rem;color:var(--fog)">〜</span></div>
+      <p style="font-size:.65rem;letter-spacing:.15em;color:var(--fog);margin-top:.4rem;margin-bottom:2.5rem">写真のみ</p>
+      <div style="display:flex;flex-direction:column;gap:.9rem;padding-top:2rem;border-top:1px solid var(--ink4)">
+        <div style="display:flex;align-items:center;gap:.8rem;font-size:.78rem;color:rgba(242,240,236,.6)"><span style="color:var(--g);font-size:.9rem">✓</span>納品20枚</div>
+        <div style="display:flex;align-items:center;gap:.8rem;font-size:.78rem;color:rgba(242,240,236,.6)"><span style="color:var(--g);font-size:.9rem">✓</span>レタッチ込み</div>
+        <div style="display:flex;align-items:center;gap:.8rem;font-size:.78rem;color:rgba(242,240,236,.6)"><span style="color:var(--g);font-size:.9rem">✓</span>納期1週間</div>
+        <div style="display:flex;align-items:center;gap:.8rem;font-size:.78rem;color:rgba(242,240,236,.6)"><span style="color:var(--g);font-size:.9rem">✓</span>高解像度データ納品</div>
+      </div>
+      <a href="#contact" style="display:inline-flex;align-items:center;gap:.6rem;margin-top:2.5rem;font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;color:var(--g);text-decoration:none;border:1px solid rgba(184,146,42,.4);padding:.7rem 1.4rem;transition:.25s" onmouseenter="this.style.background='var(--g)';this.style.color='var(--ink)'" onmouseleave="this.style.background='';this.style.color='var(--g)'">お問い合わせ →</a>
+    </div>
+
+    <div style="padding:3rem;border-right:1px solid var(--ink4);background:rgba(184,146,42,.05);position:relative">
+      <div style="position:absolute;top:1.5rem;right:1.5rem;background:var(--g);color:var(--ink);font-size:.52rem;letter-spacing:.2em;text-transform:uppercase;padding:.3rem .8rem">人気</div>
+      <p style="font-size:.6rem;letter-spacing:.3em;text-transform:uppercase;color:var(--g);margin-bottom:1.5rem">Photo + Video</p>
+      <div style="font-family:var(--ff-serif);font-size:2.8rem;color:var(--paper);line-height:1">¥100,000<span style="font-size:1rem;color:var(--fog)">〜</span></div>
+      <p style="font-size:.65rem;letter-spacing:.15em;color:var(--fog);margin-top:.4rem;margin-bottom:2.5rem">写真＋動画</p>
+      <div style="display:flex;flex-direction:column;gap:.9rem;padding-top:2rem;border-top:1px solid var(--ink4)">
+        <div style="display:flex;align-items:center;gap:.8rem;font-size:.78rem;color:rgba(242,240,236,.6)"><span style="color:var(--g);font-size:.9rem">✓</span>写真20枚</div>
+        <div style="display:flex;align-items:center;gap:.8rem;font-size:.78rem;color:rgba(242,240,236,.6)"><span style="color:var(--g);font-size:.9rem">✓</span>動画1〜2分</div>
+        <div style="display:flex;align-items:center;gap:.8rem;font-size:.78rem;color:rgba(242,240,236,.6)"><span style="color:var(--g);font-size:.9rem">✓</span>レタッチ・カラグレ込み</div>
+        <div style="display:flex;align-items:center;gap:.8rem;font-size:.78rem;color:rgba(242,240,236,.6)"><span style="color:var(--g);font-size:.9rem">✓</span>納期2週間</div>
+      </div>
+      <a href="#contact" style="display:inline-flex;align-items:center;gap:.6rem;margin-top:2.5rem;font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;color:var(--ink);text-decoration:none;background:var(--g);border:1px solid var(--g);padding:.7rem 1.4rem;transition:.25s" onmouseenter="this.style.background='var(--g2)';this.style.borderColor='var(--g2)'" onmouseleave="this.style.background='var(--g)';this.style.borderColor='var(--g)'">お問い合わせ →</a>
+    </div>
+
+    <div style="padding:3rem;transition:background .3s" onmouseenter="this.style.background='rgba(184,146,42,.04)'" onmouseleave="this.style.background=''">
+      <p style="font-size:.6rem;letter-spacing:.3em;text-transform:uppercase;color:var(--g);margin-bottom:1.5rem">SNS</p>
+      <div style="font-family:var(--ff-serif);font-size:2.8rem;color:var(--paper);line-height:1">¥50,000<span style="font-size:1rem;color:var(--fog)">〜/月</span></div>
+      <p style="font-size:.65rem;letter-spacing:.15em;color:var(--fog);margin-top:.4rem;margin-bottom:2.5rem">SNS運用</p>
+      <div style="display:flex;flex-direction:column;gap:.9rem;padding-top:2rem;border-top:1px solid var(--ink4)">
+        <div style="display:flex;align-items:center;gap:.8rem;font-size:.78rem;color:rgba(242,240,236,.6)"><span style="color:var(--g);font-size:.9rem">✓</span>投稿用写真10枚</div>
+        <div style="display:flex;align-items:center;gap:.8rem;font-size:.78rem;color:rgba(242,240,236,.6)"><span style="color:var(--g);font-size:.9rem">✓</span>動画リール1本</div>
+        <div style="display:flex;align-items:center;gap:.8rem;font-size:.78rem;color:rgba(242,240,236,.6)"><span style="color:var(--g);font-size:.9rem">✓</span>月1回撮影</div>
+        <div style="display:flex;align-items:center;gap:.8rem;font-size:.78rem;color:rgba(242,240,236,.6)"><span style="color:var(--g);font-size:.9rem">✓</span>レタッチ込み</div>
+      </div>
+      <a href="#contact" style="display:inline-flex;align-items:center;gap:.6rem;margin-top:2.5rem;font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;color:var(--g);text-decoration:none;border:1px solid rgba(184,146,42,.4);padding:.7rem 1.4rem;transition:.25s" onmouseenter="this.style.background='var(--g)';this.style.color='var(--ink)'" onmouseleave="this.style.background='';this.style.color='var(--g)'">お問い合わせ →</a>
+    </div>
+
+  </div>
+  <p style="margin-top:1.5rem;font-size:.72rem;color:var(--fog);text-align:center">※ 料金は車種・ロケーション・使用目的により変動します。詳しくはお問い合わせください。</p>
 </section>
 
 <!-- FILM -->
