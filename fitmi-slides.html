@@ -610,6 +610,103 @@
     background: rgba(255,255,255,0.08);
     margin: 32px 0;
   }
+
+  /* ==================== MOBILE ==================== */
+  @media (max-width: 768px) {
+
+    .slide {
+      padding: 60px 24px 80px;
+      justify-content: flex-start;
+      overflow-y: auto;
+      height: 100vh;
+    }
+
+    .bg-text { display: none; }
+
+    /* S1 Cover */
+    .s1 .title { font-size: 40px; }
+    .s1 .subtitle { font-size: 15px; margin-bottom: 32px; }
+    .s1 .eyebrow { margin-bottom: 16px; }
+
+    /* Heading */
+    .heading { font-size: 28px; margin-bottom: 24px; }
+
+    /* Label */
+    .label { margin-bottom: 12px; }
+
+    /* S2 Profile */
+    .slide.s2 { padding: 60px 24px 100px !important; }
+    .slide.s2 > div > div[style] {
+      grid-template-columns: 1fr !important;
+      gap: 24px !important;
+    }
+    .profile-name { font-size: 36px; }
+    .profile-role { font-size: 13px; padding: 14px 16px; margin-bottom: 16px; }
+    .achievement-item { padding: 12px 14px; }
+    .achievement-num { font-size: 16px !important; min-width: 60px; }
+    .achievement-desc { font-size: 12px; }
+    .photo-grid {
+      grid-template-columns: 1fr 1fr !important;
+      grid-template-rows: auto !important;
+      height: 240px !important;
+    }
+
+    /* Fact grid */
+    .fact-grid { grid-template-columns: 1fr; gap: 8px; margin-bottom: 20px; }
+    .fact { padding: 16px; }
+    .fact-num { font-size: 28px; }
+
+    /* Two col */
+    .two-col { grid-template-columns: 1fr; gap: 20px; }
+
+    /* Prob list */
+    .prob-list li { font-size: 13px; padding: 12px 14px; }
+
+    /* Arrow flow */
+    .arrow-flow { display: none; }
+
+    /* Plan table */
+    .plan-table { font-size: 12px; }
+    .plan-table th { padding: 8px 10px; }
+    .plan-table td { padding: 10px; }
+    .plan-table .phase { font-size: 13px; }
+
+    /* ROI */
+    .roi-grid { grid-template-columns: 1fr; }
+    .roi-card { padding: 20px; }
+    .roi-card .roi-val { font-size: 28px; }
+
+    /* S7 ROI two col */
+    .slide.s7 > div[style*="grid-template-columns: 1fr 1fr"] {
+      grid-template-columns: 1fr !important;
+      gap: 20px !important;
+    }
+
+    /* Ref grid */
+    .ref-grid { grid-template-columns: 1fr; gap: 8px; margin-bottom: 20px; }
+    .ref-card { padding: 16px; }
+    .direction-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
+    .direction-item { padding: 12px; font-size: 11px; }
+
+    /* Ask */
+    .ask-box { padding: 24px; margin-bottom: 20px; }
+    .ask-amount { font-size: 40px; }
+    .ask-desc { font-size: 13px; }
+    .benefit-list { grid-template-columns: 1fr; gap: 8px; }
+    .benefit-item { padding: 12px 14px; font-size: 12px; }
+
+    /* S9 two col */
+    .slide.s9 .two-col {
+      grid-template-columns: 1fr !important;
+    }
+
+    /* Nav */
+    .nav { bottom: 20px; }
+    .slide-num { top: 20px; right: 20px; font-size: 11px; }
+
+    /* Tagline */
+    .tagline { font-size: 13px; max-width: 100%; }
+  }
 </style>
 </head>
 <body>
