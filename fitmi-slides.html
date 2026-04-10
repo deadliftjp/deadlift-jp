@@ -1,0 +1,1030 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FITMI アパレル事業 提案</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', sans-serif;
+    background: #0a0a0a;
+    color: #fff;
+    height: 100vh;
+    overflow: hidden;
+    user-select: none;
+  }
+
+  /* Slide container */
+  .slides-wrapper {
+    display: flex;
+    width: 100%;
+    height: 100vh;
+    transition: transform 0.6s cubic-bezier(0.77, 0, 0.175, 1);
+  }
+
+  .slide {
+    min-width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 80px 100px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Navigation */
+  .nav {
+    position: fixed;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    z-index: 100;
+  }
+
+  .nav-btn {
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.3);
+    color: #fff;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+  }
+
+  .nav-btn:hover { background: rgba(255,255,255,0.3); }
+  .nav-btn:disabled { opacity: 0.2; cursor: default; }
+
+  .nav-dots {
+    display: flex;
+    gap: 8px;
+  }
+
+  .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.3);
+    cursor: pointer;
+    transition: background 0.2s, transform 0.2s;
+  }
+
+  .dot.active {
+    background: #fff;
+    transform: scale(1.3);
+  }
+
+  .slide-num {
+    position: fixed;
+    top: 32px;
+    right: 48px;
+    font-size: 12px;
+    color: rgba(255,255,255,0.4);
+    letter-spacing: 2px;
+    z-index: 100;
+  }
+
+  /* ==================== SLIDE STYLES ==================== */
+
+  /* S1: Cover */
+  .s1 { background: #0a0a0a; }
+
+  .s1 .eyebrow {
+    font-size: 12px;
+    letter-spacing: 4px;
+    color: rgba(255,255,255,0.4);
+    margin-bottom: 24px;
+    text-transform: uppercase;
+  }
+
+  .s1 .title {
+    font-size: 72px;
+    font-weight: 900;
+    letter-spacing: -2px;
+    line-height: 1;
+    margin-bottom: 16px;
+  }
+
+  .s1 .subtitle {
+    font-size: 20px;
+    color: rgba(255,255,255,0.5);
+    font-weight: 300;
+    margin-bottom: 60px;
+  }
+
+  .s1 .meta {
+    font-size: 13px;
+    color: rgba(255,255,255,0.3);
+    line-height: 2;
+  }
+
+  .s1 .line {
+    width: 60px;
+    height: 2px;
+    background: #fff;
+    margin-bottom: 40px;
+  }
+
+  /* S2: Profile */
+  .s2 { background: #0d0d0d; }
+
+  /* S3: Problem */
+  .s3 { background: #111; }
+
+  /* S4: Root cause */
+  .s4 { background: #0d0d0d; }
+
+  /* S5: Solution */
+  .s5 { background: #0a0a0a; }
+
+  /* S6: Plan */
+  .s6 { background: #111; }
+
+  /* S7: ROI */
+  .s7 { background: #0d0d0d; }
+
+  /* S8: Reference */
+  .s8 { background: #111; }
+
+  /* S9: Ask */
+  .s9 { background: #0a0a0a; }
+
+  /* Reference brands */
+  .ref-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    margin-bottom: 32px;
+  }
+
+  .ref-card {
+    padding: 24px 20px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .ref-brand {
+    font-size: 18px;
+    font-weight: 800;
+    color: #fff;
+    margin-bottom: 4px;
+    letter-spacing: -0.5px;
+  }
+
+  .ref-origin {
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: rgba(255,255,255,0.3);
+    margin-bottom: 14px;
+  }
+
+  .ref-desc {
+    font-size: 12px;
+    color: rgba(255,255,255,0.55);
+    line-height: 1.8;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    padding-top: 12px;
+  }
+
+  .ref-tag {
+    display: inline-block;
+    font-size: 10px;
+    padding: 3px 10px;
+    border: 1px solid rgba(255,255,255,0.2);
+    color: rgba(255,255,255,0.5);
+    margin-bottom: 12px;
+    letter-spacing: 1px;
+  }
+
+  .direction-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2px;
+  }
+
+  .direction-item {
+    padding: 16px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    font-size: 12px;
+    color: rgba(255,255,255,0.7);
+    line-height: 1.7;
+  }
+
+  .direction-item strong {
+    display: block;
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: rgba(255,255,255,0.35);
+    margin-bottom: 6px;
+  }
+
+  /* Profile slide */
+  .profile-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    align-items: start;
+  }
+
+  /* Photo grid */
+  .photo-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 4px;
+    height: 380px;
+  }
+
+  .photo-grid img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    display: block;
+  }
+
+  .photo-label {
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: rgba(255,255,255,0.3);
+    text-align: center;
+    margin-top: 8px;
+  }
+
+  .profile-name {
+    font-size: 52px;
+    font-weight: 900;
+    letter-spacing: -2px;
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+
+  .profile-name-en {
+    font-size: 14px;
+    letter-spacing: 3px;
+    color: rgba(255,255,255,0.35);
+    margin-bottom: 24px;
+  }
+
+  .profile-role {
+    font-size: 14px;
+    color: rgba(255,255,255,0.6);
+    line-height: 2;
+    padding: 20px 24px;
+    background: rgba(255,255,255,0.04);
+    border-left: 3px solid rgba(255,255,255,0.2);
+    margin-bottom: 24px;
+  }
+
+  .achievement-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .achievement-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 18px 20px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.07);
+  }
+
+  .achievement-num {
+    font-size: 22px;
+    font-weight: 900;
+    color: #fff;
+    white-space: nowrap;
+    min-width: 80px;
+  }
+
+  .achievement-desc {
+    font-size: 13px;
+    color: rgba(255,255,255,0.55);
+    line-height: 1.7;
+    margin-top: 2px;
+  }
+
+  .achievement-item.highlight-ach {
+    background: rgba(255,255,255,0.1);
+    border-color: rgba(255,255,255,0.2);
+  }
+
+  .achievement-item.highlight-ach .achievement-num {
+    color: #44ff88;
+  }
+
+  .brand-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 16px;
+  }
+
+  .brand-tag {
+    padding: 6px 14px;
+    border: 1px solid rgba(255,255,255,0.2);
+    font-size: 12px;
+    color: rgba(255,255,255,0.6);
+    letter-spacing: 1px;
+  }
+
+  /* Common */
+  .label {
+    font-size: 11px;
+    letter-spacing: 4px;
+    color: rgba(255,255,255,0.35);
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+
+  .heading {
+    font-size: 48px;
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 48px;
+    letter-spacing: -1px;
+  }
+
+  .heading em {
+    color: rgba(255,255,255,0.35);
+    font-style: normal;
+  }
+
+  .accent { color: #fff; }
+
+  /* Fact grid */
+  .fact-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    margin-bottom: 40px;
+  }
+
+  .fact {
+    background: rgba(255,255,255,0.04);
+    padding: 28px 24px;
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .fact-num {
+    font-size: 40px;
+    font-weight: 900;
+    margin-bottom: 6px;
+    letter-spacing: -1px;
+  }
+
+  .fact-label {
+    font-size: 12px;
+    color: rgba(255,255,255,0.45);
+    line-height: 1.6;
+  }
+
+  .fact.red .fact-num { color: #ff4444; }
+  .fact.green .fact-num { color: #44ff88; }
+
+  /* Two col */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    align-items: start;
+  }
+
+  /* Problem list */
+  .prob-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .prob-list li {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    font-size: 15px;
+    line-height: 1.7;
+    color: rgba(255,255,255,0.75);
+    padding: 16px 20px;
+    background: rgba(255,255,255,0.04);
+    border-left: 3px solid rgba(255,255,255,0.15);
+  }
+
+  .prob-list li .icon {
+    font-size: 18px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  /* Arrow box */
+  .arrow-flow {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .flow-item {
+    padding: 18px 24px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    font-size: 14px;
+    color: rgba(255,255,255,0.8);
+    position: relative;
+  }
+
+  .flow-item.highlight-item {
+    background: rgba(255,255,255,0.12);
+    border-color: rgba(255,255,255,0.3);
+    color: #fff;
+    font-weight: 700;
+  }
+
+  .flow-arrow {
+    text-align: center;
+    color: rgba(255,255,255,0.3);
+    font-size: 20px;
+  }
+
+  /* Plan table */
+  .plan-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+
+  .plan-table th {
+    padding: 12px 20px;
+    text-align: left;
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: rgba(255,255,255,0.4);
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    font-weight: 400;
+  }
+
+  .plan-table td {
+    padding: 16px 20px;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    color: rgba(255,255,255,0.8);
+    line-height: 1.6;
+    vertical-align: top;
+  }
+
+  .plan-table tr:last-child td { border-bottom: none; }
+
+  .plan-table .phase {
+    font-weight: 800;
+    color: #fff;
+    font-size: 16px;
+    white-space: nowrap;
+  }
+
+  .plan-table .period {
+    color: rgba(255,255,255,0.35);
+    font-size: 12px;
+    white-space: nowrap;
+  }
+
+  /* ROI card */
+  .roi-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 2px;
+  }
+
+  .roi-card {
+    padding: 32px 28px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .roi-card .roi-label {
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: rgba(255,255,255,0.35);
+    margin-bottom: 12px;
+  }
+
+  .roi-card .roi-val {
+    font-size: 36px;
+    font-weight: 900;
+    margin-bottom: 6px;
+    letter-spacing: -1px;
+  }
+
+  .roi-card .roi-sub {
+    font-size: 12px;
+    color: rgba(255,255,255,0.4);
+    line-height: 1.6;
+  }
+
+  .roi-card.main {
+    background: #fff;
+    color: #0a0a0a;
+    border-color: #fff;
+  }
+
+  .roi-card.main .roi-label { color: rgba(0,0,0,0.4); }
+  .roi-card.main .roi-sub { color: rgba(0,0,0,0.5); }
+
+  /* Final ask */
+  .ask-box {
+    border: 1px solid rgba(255,255,255,0.15);
+    padding: 48px;
+    margin-bottom: 40px;
+    position: relative;
+  }
+
+  .ask-box::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 4px; height: 100%;
+    background: #fff;
+  }
+
+  .ask-amount {
+    font-size: 64px;
+    font-weight: 900;
+    letter-spacing: -2px;
+    margin-bottom: 8px;
+  }
+
+  .ask-desc {
+    font-size: 15px;
+    color: rgba(255,255,255,0.55);
+    line-height: 1.8;
+  }
+
+  .benefit-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .benefit-item {
+    padding: 16px 20px;
+    background: rgba(255,255,255,0.05);
+    font-size: 13px;
+    color: rgba(255,255,255,0.7);
+    border-left: 2px solid rgba(255,255,255,0.2);
+  }
+
+  /* Decorative bg text */
+  .bg-text {
+    position: absolute;
+    font-size: 220px;
+    font-weight: 900;
+    color: rgba(255,255,255,0.02);
+    right: -20px;
+    bottom: -40px;
+    letter-spacing: -10px;
+    pointer-events: none;
+    line-height: 1;
+  }
+
+  /* Tagline */
+  .tagline {
+    font-size: 15px;
+    color: rgba(255,255,255,0.4);
+    line-height: 2;
+    max-width: 480px;
+  }
+
+  .divider {
+    width: 100%;
+    height: 1px;
+    background: rgba(255,255,255,0.08);
+    margin: 32px 0;
+  }
+</style>
+</head>
+<body>
+
+<div class="slide-num" id="slideNum">01 / 09</div>
+
+<div class="slides-wrapper" id="slidesWrapper">
+
+  <!-- S1: Cover -->
+  <div class="slide s1">
+    <div class="bg-text">FITMI</div>
+    <div class="eyebrow">Investor Presentation — 2026</div>
+    <div class="title">アパレル事業<br>成長戦略</div>
+    <div class="line"></div>
+    <div class="subtitle">SNSコンテンツ内製化による<br>ブランド認知と売上拡大の提案</div>
+    <div class="meta">
+      MIXFIT × FITMI アパレル<br>
+      提案者：映像・写真担当
+    </div>
+  </div>
+
+  <!-- S2: Profile -->
+  <div class="slide s2" style="padding: 60px 80px;">
+    <div class="label">Who I Am</div>
+    <div style="display: grid; grid-template-columns: 1fr 1.2fr; gap: 48px; align-items: start;">
+      <div>
+        <div class="profile-name">藤井 優弥</div>
+        <div class="profile-name-en">YUYA FUJII</div>
+        <div class="profile-role">
+          株式会社clout 業務委託<br>
+          写真・映像・マーケティング担当<br>
+          アパレル4社展開中、うち2社の専属カメラマン
+        </div>
+        <div class="achievement-list">
+          <div class="achievement-item highlight-ach">
+            <div class="achievement-num">5億円</div>
+            <div class="achievement-desc">前年比150%<br>担当ブランドの年間売上達成</div>
+          </div>
+          <div class="achievement-item">
+            <div class="achievement-num">2社担当</div>
+            <div class="achievement-desc">
+              4社展開中のアパレルを専属担当<br>
+              <a href="https://www.instagram.com/thatslife.jp/" target="_blank" style="color:rgba(255,255,255,0.4); font-size:11px; letter-spacing:1px; text-decoration:none;">↗ instagram.com/thatslife.jp</a><br>
+              <a href="https://www.instagram.com/belvet.jp/" target="_blank" style="color:rgba(255,255,255,0.4); font-size:11px; letter-spacing:1px; text-decoration:none;">↗ instagram.com/belvet.jp</a>
+            </div>
+          </div>
+          <div class="achievement-item">
+            <div class="achievement-num">高級車</div>
+            <div class="achievement-desc">Aston Martin DB12・Porsche<br>ハイエンド撮影実績</div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="photo-grid" style="grid-template-rows: 1fr 1fr; grid-template-columns: 1fr 1fr 1fr 1fr;">
+          <img src="img_apparel1.jpg" alt="apparel1">
+          <img src="img_apparel2.jpg" alt="apparel2">
+          <img src="img_apparel3.jpg" alt="apparel3">
+          <img src="img_apparel4.jpg" alt="apparel4">
+          <img src="img_apparel5.jpg" alt="apparel5">
+          <img src="img_apparel6.jpg" alt="apparel6">
+          <img src="img_apparel7.jpg" alt="apparel7">
+        </div>
+        <div class="photo-label">APPAREL / AUTOMOTIVE WORKS</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- S3: Current situation -->
+  <div class="slide s3">
+    <div class="bg-text">NOW</div>
+    <div class="label">Current Situation</div>
+    <div class="heading">現状と<em>課題</em></div>
+    <div class="fact-grid">
+      <div class="fact">
+        <div class="fact-num">200名</div>
+        <div class="fact-label">ジム会員数<br>MIXFIT 甲子園</div>
+      </div>
+      <div class="fact red">
+        <div class="fact-num">低迷</div>
+        <div class="fact-label">アパレル・ギアの<br>BASE販売（売れ筋なし）</div>
+      </div>
+      <div class="fact red">
+        <div class="fact-num">5着</div>
+        <div class="fact-label">3万人インフルエンサー起用で<br>売れた数</div>
+      </div>
+    </div>
+    <div class="tagline">
+      商品の素材・デザインに問題はない。<br>
+      売れない原因は<strong style="color:#fff">「見せ方」と「届け方」</strong>にある。
+    </div>
+  </div>
+
+  <!-- S4: Root cause -->
+  <div class="slide s4">
+    <div class="bg-text">WHY</div>
+    <div class="label">Root Cause Analysis</div>
+    <div class="heading">なぜ<em>売れないのか</em></div>
+    <div class="two-col">
+      <ul class="prob-list">
+        <li>
+          <span class="icon">📷</span>
+          <span>商品の魅力を伝えるコンテンツが不足。<br>静止画・テキストのみでは訴求力が弱い。</span>
+        </li>
+        <li>
+          <span class="icon">📱</span>
+          <span>SNS運用に一貫性がなく、<br>アルゴリズムに乗れていない。</span>
+        </li>
+        <li>
+          <span class="icon">🎯</span>
+          <span>インフルエンサー1本だけでは<br>ブランドへの信頼が醸成されない。</span>
+        </li>
+        <li>
+          <span class="icon">🔁</span>
+          <span>継続的なコンテンツ発信がないため<br>フォロワーが増えない・定着しない。</span>
+        </li>
+      </ul>
+      <div class="arrow-flow">
+        <div class="flow-item">商品は良い ✓</div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-item">でも「見せ方」が足りない</div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-item">SNSで伝わらない</div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-item">認知が広がらない</div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-item highlight-item">売れない</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- S5: Solution -->
+  <div class="slide s5">
+    <div class="bg-text">HOW</div>
+    <div class="label">Solution</div>
+    <div class="heading">解決策：<em>映像・写真による</em><br>SNS内製運用</div>
+    <div class="fact-grid">
+      <div class="fact">
+        <div class="fact-num" style="font-size:28px;">週1〜2回</div>
+        <div class="fact-label">ジムでの撮影<br>着用ワークアウト・商品カット</div>
+      </div>
+      <div class="fact">
+        <div class="fact-num" style="font-size:28px;">週3本</div>
+        <div class="fact-label">リール投稿<br>頻度を保ちアルゴリズムに乗る</div>
+      </div>
+      <div class="fact green">
+        <div class="fact-num" style="font-size:28px;">内製化</div>
+        <div class="fact-label">Sony A7Vによるプロ品質<br>スピードと継続性を両立</div>
+      </div>
+    </div>
+    <div class="divider"></div>
+    <div class="tagline">
+      フィットネスアパレルは<strong style="color:#fff">「動いている姿」</strong>で売れる。<br>
+      ジムという最高のスタジオが既にある。あとはコンテンツを作り続けるだけ。
+    </div>
+  </div>
+
+  <!-- S6: Plan -->
+  <div class="slide s6">
+    <div class="bg-text">PLAN</div>
+    <div class="label">Action Plan</div>
+    <div class="heading">3フェーズ<em>成長計画</em></div>
+    <table class="plan-table">
+      <tr>
+        <th>フェーズ</th>
+        <th>期間</th>
+        <th>アクション</th>
+        <th>目標</th>
+      </tr>
+      <tr>
+        <td>
+          <div class="phase">Phase 1</div>
+          <div class="period">基盤構築</div>
+        </td>
+        <td>1〜2ヶ月目</td>
+        <td>週1〜2回撮影開始<br>リール週3本投稿<br>ジム会員への告知・先行販売</td>
+        <td>フォロワー300人<br>月間販売 20〜30着</td>
+      </tr>
+      <tr>
+        <td>
+          <div class="phase">Phase 2</div>
+          <div class="period">認知拡大</div>
+        </td>
+        <td>3〜6ヶ月目</td>
+        <td>UGC（会員投稿）の促進<br>インフルエンサー起用（タイミング選定）<br>コンテンツの型を確立</td>
+        <td>フォロワー1,000人<br>月間販売 50〜100着</td>
+      </tr>
+      <tr>
+        <td>
+          <div class="phase">Phase 3</div>
+          <div class="period">売上拡大</div>
+        </td>
+        <td>7〜12ヶ月目</td>
+        <td>自社ECサイト移行<br>新商品ライン追加<br>他ジムへの展開</td>
+        <td>フォロワー5,000人<br>月間販売 200着以上</td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- S7: ROI -->
+  <div class="slide s7">
+    <div class="bg-text">ROI</div>
+    <div class="label">Risk &amp; Return</div>
+    <div class="heading">売上がゼロでも<em>残るもの</em></div>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start;">
+      <div>
+        <div style="font-size:13px; color:rgba(255,255,255,0.45); margin-bottom: 20px; line-height:1.8;">
+          仮に売上が思うように出なかったとしても、<br>
+          この投資はジムとスタッフに確実な資産を残す。
+        </div>
+        <div class="achievement-list">
+          <div class="achievement-item highlight-ach">
+            <div class="achievement-num" style="font-size:16px; min-width:auto; margin-right:8px;">SNS資産</div>
+            <div class="achievement-desc">フォロワー・コンテンツ・エンゲージメント。<br>積み上げたSNSは消えない。</div>
+          </div>
+          <div class="achievement-item">
+            <div class="achievement-num" style="font-size:16px; min-width:auto; margin-right:8px;">ジムの宣伝</div>
+            <div class="achievement-desc">撮影コンテンツがMIXFITの魅力を発信。<br>会員獲得・ジムブランディングにもなる。</div>
+          </div>
+          <div class="achievement-item">
+            <div class="achievement-num" style="font-size:16px; min-width:auto; margin-right:8px;">スタッフ成長</div>
+            <div class="achievement-desc">モデル経験・SNS露出がスタッフの自信と<br>モチベーションに直結する。</div>
+          </div>
+          <div class="achievement-item">
+            <div class="achievement-num" style="font-size:16px; min-width:auto; margin-right:8px;">顧客データ</div>
+            <div class="achievement-desc">購買層・反応データが蓄積され<br>次の施策に活きる。</div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div style="border: 1px solid rgba(255,255,255,0.1); padding: 32px; margin-bottom: 16px;">
+          <div style="font-size:11px; letter-spacing:3px; color:rgba(255,255,255,0.35); margin-bottom:16px;">COST COMPARISON</div>
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+            <div>
+              <div style="font-size:13px; color:rgba(255,255,255,0.4);">今回の投資（月）</div>
+              <div style="font-size:36px; font-weight:900; letter-spacing:-1px;">3〜5万円</div>
+            </div>
+            <div style="font-size:28px; color:rgba(255,255,255,0.2);">vs</div>
+            <div style="text-align:right;">
+              <div style="font-size:13px; color:rgba(255,255,255,0.4);">外注相場（月）</div>
+              <div style="font-size:36px; font-weight:900; letter-spacing:-1px; color:rgba(255,255,255,0.35);">30〜50万円</div>
+            </div>
+          </div>
+          <div style="font-size:12px; color:rgba(255,255,255,0.4); line-height:1.8; border-top:1px solid rgba(255,255,255,0.08); padding-top:16px;">
+            年間60万円の投資で、外注なら<strong style="color:#fff">600万円相当</strong>の<br>コンテンツ制作体制を内製化できる。
+          </div>
+        </div>
+        <div style="padding: 20px 24px; background: rgba(255,255,255,0.06); border-left: 3px solid #fff; font-size:14px; color:rgba(255,255,255,0.8); line-height:1.9;">
+          売上が出れば利益。<br>
+          売上がなくてもジム・スタッフ・ブランドに<br>
+          <strong style="color:#fff">必ず価値が残る投資です。</strong>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- S8: Reference Brands -->
+  <div class="slide s8">
+    <div class="bg-text">REF</div>
+    <div class="label">Visual Reference</div>
+    <div class="heading">目指す世界観<em>——参考ブランド</em></div>
+    <div class="ref-grid">
+      <div class="ref-card">
+        <div class="ref-brand">Gymshark</div>
+        <div class="ref-origin">UK — 女性向け主力</div>
+        <div class="ref-tag">DARK &amp; STRONG</div>
+        <div class="ref-desc">
+          ワークアウト中の動きで素材感を見せる。
+          暗め・コントラスト強め・かっこいい系。
+          レギンス・スポーツブラが主力。
+        </div>
+        <div style="margin-top: 12px; display: flex; flex-direction: column; gap: 4px;">
+          <a href="https://www.instagram.com/gymshark/" target="_blank" style="font-size:11px; color:rgba(255,255,255,0.35); text-decoration:none; letter-spacing:1px;">↗ instagram.com/gymshark</a>
+          <a href="https://gymshark.com" target="_blank" style="font-size:11px; color:rgba(255,255,255,0.35); text-decoration:none; letter-spacing:1px;">↗ gymshark.com</a>
+        </div>
+      </div>
+      <div class="ref-card">
+        <div class="ref-brand">AYBL</div>
+        <div class="ref-origin">UK — 女性専門</div>
+        <div class="ref-tag">CLEAN &amp; BRIGHT</div>
+        <div class="ref-desc">
+          スタジオ撮影とジム撮影を混在。
+          明るいトーン・ベージュ・ホワイト系。
+          女性が「着たい」と思わせる見せ方。
+        </div>
+        <div style="margin-top: 12px; display: flex; flex-direction: column; gap: 4px;">
+          <a href="https://www.instagram.com/aybl/" target="_blank" style="font-size:11px; color:rgba(255,255,255,0.35); text-decoration:none; letter-spacing:1px;">↗ instagram.com/aybl</a>
+          <a href="https://aybl.com" target="_blank" style="font-size:11px; color:rgba(255,255,255,0.35); text-decoration:none; letter-spacing:1px;">↗ aybl.com</a>
+        </div>
+      </div>
+      <div class="ref-card">
+        <div class="ref-brand">lululemon</div>
+        <div class="ref-origin">Canada — 世界展開・日本でも人気</div>
+        <div class="ref-tag">LIFESTYLE</div>
+        <div class="ref-desc">
+          ヨガ・ランニング・日常シーンを混ぜる。
+          高品質・高単価でブランド価値を確立。
+          ライフスタイル感で購買意欲を上げる。
+        </div>
+        <div style="margin-top: 12px; display: flex; flex-direction: column; gap: 4px;">
+          <a href="https://www.instagram.com/lululemon/" target="_blank" style="font-size:11px; color:rgba(255,255,255,0.35); text-decoration:none; letter-spacing:1px;">↗ instagram.com/lululemon</a>
+          <a href="https://lululemon.com" target="_blank" style="font-size:11px; color:rgba(255,255,255,0.35); text-decoration:none; letter-spacing:1px;">↗ lululemon.com</a>
+        </div>
+      </div>
+    </div>
+    <div class="label" style="margin-bottom: 12px;">FITMIの撮影方向性</div>
+    <div class="direction-grid">
+      <div class="direction-item">
+        <strong>TONE</strong>
+        クールでスタイリッシュ。暗すぎず、コントラスト強め。彩度は抑えめ。
+      </div>
+      <div class="direction-item">
+        <strong>MODEL</strong>
+        フィットな体型のスタッフモデル。ナチュラルメイク。本物感を大切に。
+      </div>
+      <div class="direction-item">
+        <strong>SCENE</strong>
+        ジム × 日常を混在。レギンスは必ず「動いている」カットを入れる。
+      </div>
+      <div class="direction-item">
+        <strong>CAMERA</strong>
+        Sony A7V。週1〜2回撮影で素材をストック。リール週3本を維持。
+      </div>
+    </div>
+  </div>
+
+  <!-- S9: Ask -->
+  <div class="slide s9">
+    <div class="bg-text">GO</div>
+    <div class="label">Investment Ask</div>
+    <div class="heading">お願いしたいこと</div>
+    <div class="two-col">
+      <div class="ask-box">
+        <div class="ask-amount">月5万円</div>
+        <div class="ask-desc">
+          撮影・SNS運用の委託費<br>
+          まず3ヶ月間のトライアル<br>
+          数字を見て継続判断
+        </div>
+      </div>
+      <div>
+        <div class="label" style="margin-bottom:16px;">この投資で得られるもの</div>
+        <div class="benefit-list">
+          <div class="benefit-item">週1〜2回の<br>プロ品質コンテンツ</div>
+          <div class="benefit-item">SNSフォロワーの<br>継続的な成長</div>
+          <div class="benefit-item">ジム会員への<br>販売チャネル確立</div>
+          <div class="benefit-item">ブランド認知と<br>SNS資産の蓄積</div>
+        </div>
+        <div class="divider"></div>
+        <div style="font-size:13px; color:rgba(255,255,255,0.5); line-height:1.9;">
+          3ヶ月で20〜30着/月の販売が実現すれば<br>
+          単価5,000円換算で月<strong style="color:#fff">10〜15万円</strong>の売上。<br>
+          投資は十分に回収できるラインです。
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Navigation -->
+<div class="nav">
+  <button class="nav-btn" id="prevBtn" onclick="changeSlide(-1)">←</button>
+  <div class="nav-dots" id="navDots"></div>
+  <button class="nav-btn" id="nextBtn" onclick="changeSlide(1)">→</button>
+</div>
+
+<script>
+  const total = 9;
+  let current = 0;
+
+  const wrapper = document.getElementById('slidesWrapper');
+  const slideNum = document.getElementById('slideNum');
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  const dotsContainer = document.getElementById('navDots');
+
+  // Create dots
+  for (let i = 0; i < total; i++) {
+    const dot = document.createElement('div');
+    dot.className = 'dot' + (i === 0 ? ' active' : '');
+    dot.onclick = () => goTo(i);
+    dotsContainer.appendChild(dot);
+  }
+
+  function goTo(n) {
+    current = n;
+    wrapper.style.transform = `translateX(-${current * 100}vw)`;
+    slideNum.textContent = String(current + 1).padStart(2, '0') + ' / ' + String(total).padStart(2, '0');
+    document.querySelectorAll('.dot').forEach((d, i) => {
+      d.classList.toggle('active', i === current);
+    });
+    prevBtn.disabled = current === 0;
+    nextBtn.disabled = current === total - 1;
+  }
+
+  function changeSlide(dir) {
+    const next = current + dir;
+    if (next >= 0 && next < total) goTo(next);
+  }
+
+  // Keyboard
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') changeSlide(1);
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') changeSlide(-1);
+  });
+
+  // Touch swipe
+  let touchStartX = 0;
+  document.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; });
+  document.addEventListener('touchend', e => {
+    const diff = touchStartX - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 50) changeSlide(diff > 0 ? 1 : -1);
+  });
+
+  goTo(0);
+</script>
+</body>
+</html>
