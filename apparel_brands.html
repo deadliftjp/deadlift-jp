@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>アパレルブランド リスト</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', sans-serif;
+    background: #0a0a0a;
+    color: #fff;
+    padding: 60px 40px;
+    min-height: 100vh;
+  }
+
+  .header {
+    margin-bottom: 48px;
+  }
+
+  .header .eyebrow {
+    font-size: 11px;
+    letter-spacing: 4px;
+    color: rgba(255,255,255,0.35);
+    margin-bottom: 12px;
+  }
+
+  .header h1 {
+    font-size: 40px;
+    font-weight: 900;
+    letter-spacing: -1px;
+    margin-bottom: 8px;
+  }
+
+  .header p {
+    font-size: 13px;
+    color: rgba(255,255,255,0.4);
+  }
+
+  /* Filter tabs */
+  .filters {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 32px;
+    flex-wrap: wrap;
+  }
+
+  .filter-btn {
+    padding: 8px 20px;
+    border: 1px solid rgba(255,255,255,0.2);
+    background: transparent;
+    color: rgba(255,255,255,0.5);
+    font-size: 12px;
+    letter-spacing: 2px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: inherit;
+  }
+
+  .filter-btn.active,
+  .filter-btn:hover {
+    background: #fff;
+    color: #0a0a0a;
+    border-color: #fff;
+  }
+
+  /* Grid */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2px;
+  }
+
+  .card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.07);
+    padding: 24px;
+    transition: background 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .card:hover {
+    background: rgba(255,255,255,0.07);
+  }
+
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 3px;
+    height: 100%;
+  }
+
+  .card.fitness::before { background: #44ff88; }
+  .card.street::before { background: #ff8844; }
+
+  .card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 16px;
+  }
+
+  .brand-name {
+    font-size: 18px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    margin-bottom: 4px;
+  }
+
+  .tags {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+
+  .tag {
+    font-size: 9px;
+    letter-spacing: 2px;
+    padding: 3px 8px;
+    border-radius: 2px;
+    font-weight: 600;
+  }
+
+  .tag.cat-fitness { background: rgba(68,255,136,0.15); color: #44ff88; }
+  .tag.cat-street { background: rgba(255,136,68,0.15); color: #ff8844; }
+  .tag.country { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.5); }
+
+  .card-desc {
+    font-size: 12px;
+    color: rgba(255,255,255,0.5);
+    line-height: 1.7;
+    margin-bottom: 20px;
+  }
+
+  .card-links {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .link-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    padding: 8px 12px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.07);
+    transition: background 0.2s;
+  }
+
+  .link-item:hover {
+    background: rgba(255,255,255,0.1);
+  }
+
+  .link-icon {
+    font-size: 14px;
+    width: 20px;
+    text-align: center;
+  }
+
+  .link-text {
+    font-size: 11px;
+    color: rgba(255,255,255,0.6);
+    letter-spacing: 0.5px;
+  }
+
+  .link-item.ig .link-text { color: #c084fc; }
+  .link-item.web .link-text { color: #60a5fa; }
+
+  /* My brands highlight */
+  .card.mine {
+    background: rgba(255,255,255,0.06);
+    border-color: rgba(255,255,255,0.15);
+  }
+
+  .mine-badge {
+    font-size: 9px;
+    letter-spacing: 2px;
+    padding: 3px 8px;
+    background: rgba(255,255,255,0.15);
+    color: #fff;
+    font-weight: 700;
+  }
+
+  /* Stats bar */
+  .stats {
+    display: flex;
+    gap: 32px;
+    margin-bottom: 40px;
+    padding: 20px 24px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.07);
+  }
+
+  .stat-item { }
+  .stat-num {
+    font-size: 28px;
+    font-weight: 900;
+    letter-spacing: -1px;
+  }
+  .stat-label {
+    font-size: 11px;
+    color: rgba(255,255,255,0.35);
+    letter-spacing: 1px;
+  }
+
+  .hidden { display: none !important; }
+
+  @media (max-width: 600px) {
+    body { padding: 32px 16px; }
+    .header h1 { font-size: 28px; }
+    .grid { grid-template-columns: 1fr; }
+    .stats { gap: 20px; flex-wrap: wrap; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="eyebrow">BRAND REFERENCE LIST</div>
+  <h1>アパレルブランド</h1>
+  <p>SNS・撮影の参考ブランドリスト</p>
+</div>
+
+<div class="stats">
+  <div class="stat-item">
+    <div class="stat-num">15</div>
+    <div class="stat-label">TOTAL BRANDS</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num" style="color:#44ff88;">13</div>
+    <div class="stat-label">FITNESS</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num" style="color:#ff8844;">2</div>
+    <div class="stat-label">STREET</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">4</div>
+    <div class="stat-label">JAPAN</div>
+  </div>
+</div>
+
+<div class="filters">
+  <button class="filter-btn active" onclick="filter('all')">ALL</button>
+  <button class="filter-btn" onclick="filter('fitness')">FITNESS</button>
+  <button class="filter-btn" onclick="filter('street')">STREET</button>
+  <button class="filter-btn" onclick="filter('japan')">JAPAN</button>
+  <button class="filter-btn" onclick="filter('mine')">担当ブランド</button>
+</div>
+
+<div class="grid" id="grid">
+
+  <div class="card fitness" data-cat="fitness" data-country="usa">
+    <div class="card-top">
+      <div>
+        <div class="brand-name">Alo Yoga</div>
+        <div class="tags">
+          <span class="tag cat-fitness">FITNESS</span>
+          <span class="tag country">USA</span>
+        </div>
+      </div>
+    </div>
+    <div class="card-desc">夕方・自然光の使い方・セレブ起用。女性向けヨガ・ピラティス系の最高峰。FITMIの世界観に最も近い。</div>
+    <div class="card-links">
+      <a class="link-item ig" href="https://www.instagram.com/aloyoga/" target="_blank">
+        <span class="link-icon">📷</span>
+        <span class="link-text">instagram.com/aloyoga</span>
+      </a>
+      <a class="link-item web" href="https://www.aloyoga.com" target="_blank">
+        <span class="link-icon">🌐</span>
+        <span class="link-text">aloyoga.com</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="card fitness" data-cat="fitness" data-country="canada">
+    <div class="card-top">
+      <div>
+        <div class="brand-name">lululemon</div>
+        <div class="tags">
+          <span class="tag cat-fitness">FITNESS</span>
+          <span class="tag country">Canada</span>
+        </div>
+      </div>
+    </div>
+    <div class="card-desc">ライフスタイル感・高単価ブランディングの手本。ヨガ・ランニング・日常を融合させた世界観。</div>
+    <div class="card-links">
+      <a class="link-item ig" href="https://www.instagram.com/lululemon/" target="_blank">
+        <span class="link-icon">📷</span>
+        <span class="link-text">instagram.com/lululemon</span>
+      </a>
+      <a class="link-item web" href="https://www.lululemon.com" target="_blank">
+        <span class="link-icon">🌐</span>
+        <span class="link-text">lululemon.com</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="card fitness" data-cat="fitness" data-country="uk">
+    <div class="card-top">
+      <div>
+        <div class="brand-name">Gymshark</div>
+        <div class="tags">
+          <span class="tag cat-fitness">FITNESS</span>
+          <span class="tag country">UK</span>
+        </div>
+      </div>
+    </div>
+    <div class="card-desc">リールの量と質ともにトップクラス。ワークアウト動画で商品を自然に見せる手法が参考になる。</div>
+    <div class="card-links">
+      <a class="link-item ig" href="https://www.instagram.com/gymshark/" target="_blank">
+        <span class="link-icon">📷</span>
+        <span class="link-text">instagram.com/gymshark</span>
+      </a>
+      <a class="link-item web" href="https://www.gymshark.com" target="_blank">
+        <span class="link-icon">🌐</span>
+        <span class="link-text">gymshark.com</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="card fitness" data-cat="fitness" data-country="uk">
+    <div class="card-top">
+      <div>
+        <div class="brand-name">AYBL</div>
+        <div class="tags">
+          <span class="tag cat-fitness">FITNESS</span>
+          <span class="tag country">UK</span>
+        </div>
+      </div>
+    </div>
+    <div class="card-desc">女性専門・クリーントーン・スタジオ撮影とジム撮影の混在。明るいトーンで女性が着たいと思わせる見せ方。</div>
+    <div class="card-links">
+      <a class="link-item ig" href="https://www.instagram.com/aybl/" target="_blank">
+        <span class="link-icon">📷</span>
+        <span class="link-text">instagram.com/aybl</span>
+      </a>
+      <a class="link-item web" href="https://www.aybl.com" target="_blank">
+        <span class="link-icon">🌐</span>
+        <span class="link-text">aybl.com</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="card fitness" data-cat="fitness" data-country="usa">
+    <div class="card-top">
+      <div>
+        <div class="brand-name">Vuori</div>
+        <div class="tags">
+          <span class="tag cat-fitness">FITNESS</span>
+          <span class="tag country">USA</span>
+        </div>
+      </div>
+    </div>
+    <div class="card-desc">自然光・アウトドア×フィットネスの融合。lululemonに近いポジション。自然光の使い方が参考になる。</div>
+    <div class="card-links">
+      <a class="link-item ig" href="https://www.instagram.com/vuoriclothing/" target="_blank">
+        <span class="link-icon">📷</span>
+        <span class="link-text">instagram.com/vuoriclothing</span>
+      </a>
+      <a class="link-item web" href="https://www.vuoriclothing.com" target="_blank">
+        <span class="link-icon">🌐</span>
+        <span class="link-text">vuoriclothing.com</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="card fitness" data-cat="fitness" data-country="usa">
+    <div class="card-top">
+      <div>
+        <div class="brand-name">Girlfriend Collective</div>
+        <div class="tags">
+          <span class="tag cat-fitness">FITNESS</span>
+          <span class="tag country">USA</span>
+        </div>
+      </div>
+    </div>
+    <div class="card-desc">カラー展開の見せ方・UGC活用が上手い。サステナブル系・女性専門。</div>
+    <div class="card-links">
+      <a class="link-item ig" href="https://www.instagram.com/girlfriendcollective/" target="_blank">
+        <span class="link-icon">📷</span>
+        <span class="link-text">instagram.com/girlfriendcollective</span>
+      </a>
+      <a class="link-item web" href="https://www.girlfriendcollective.com" target="_blank">
+        <span class="link-icon">🌐</span>
+        <span class="link-text">girlfriendcollective.com</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="card fitness" data-cat="fitness" data-country="usa">
+    <div class="card-top">
+      <div>
+        <div class="brand-name">Halara</div>
+        <div class="tags">
+          <span class="tag cat-fitness">FITNESS</span>
+          <span class="tag country">USA</span>
+        </div>
+      </div>
+    </div>
+    <div class="card-desc">TikTok発で急成長。若年女性向け・UGC活用が非常に上手い。SNS戦略の参考になる。</div>
+    <div class="card-links">
+      <a class="link-item ig" href="https://www.instagram.com/halaraofficial/" target="_blank">
+        <span class="link-icon">📷</span>
+        <span class="link-text">instagram.com/halaraofficial</span>
+      </a>
+      <a class="link-item web" href="https://www.halara.com" target="_blank">
+        <span class="link-icon">🌐</span>
+        <span class="link-text">halara.com</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="card fitness" data-cat="fitness" data-country="usa">
+    <div class="card-top">
+      <div>
+        <div class="brand-name">Fabletics</div>
+        <div class="tags">
+          <span class="tag cat-fitness">FITNESS</span>
+          <span class="tag country">USA</span>
+        </div>
+      </div>
+    </div>
+    <div class="card-desc">サブスク×SNSの組み合わせ。セレブ起用・大規模なインフルエンサー戦略が参考になる。</div>
+    <div class="card-links">
+      <a class="link-item ig" href="https://www.instagram.com/fabletics/" target="_blank">
+        <span class="link-icon">📷</span>
+        <span class="link-text">instagram.com/fabletics</span>
+      </a>
+      <a class="link-item web" href="https://www.fabletics.com" target="_blank">
+        <span class="link-icon">🌐</span>
+        <span class="link-text">fabletics.com</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="card fitness" data-cat="fitness" data-country="usa">
+    <div class="card-top">
+      <div>
+        <div class="brand-name">Outdoor Voices</div>
+        <div class="tags">
+          <span class="tag cat-fitness">FITNESS</span>
+          <span class="tag country">USA</span>
+        </div>
+      </div>
+    </div>
+    <div class="card-desc">カジュアル×フィットネス・明るい世界観。「楽しく動く」コンセプトが女性に刺さる。</div>
+    <div class="card-links">
+      <a class="link-item ig" href="https://www.instagram.com/outdoorvoices/" target="_blank">
+        <span class="link-icon">📷</span>
+        <span class="link-text">instagram.com/outdoorvoices</span>
+      </a>
+      <a class="link-item web" href="https://www.outdoorvoices.com" target="_blank">
+        <span class="link-icon">🌐</span>
+        <span class="link-text">outdoorvoices.com</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="card fitness" data-cat="fitness" data-country="usa">
+    <div class="card-top">
+      <div>
+        <div class="brand-name">NOBULL</div>
+        <div class="tags">
+          <span class="tag cat-fitness">FITNESS</span>
+          <span class="tag country">USA</span>
+        </div>
+      </div>
+    </div>
+    <div class="card-desc">クロスフィット系・かっこいい系男女。ハードなトレーニング映像の撮り方が参考になる。</div>
+    <div class="card-links">
+      <a class="link-item ig" href="https://www.instagram.com/nobullproject/" target="_blank">
+        <span class="link-icon">📷</span>
+        <span class="link-text">instagram.com/nobullproject</span>
+      </a>
+      <a class="link-item web" href="https://www.nobull.com" target="_blank">
+        <span class="link-icon">🌐</span>
+        <span class="link-text">nobull.com</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="card fitness" data-cat="fitness" data-country="japan">
+    <div class="card-top">
+      <div>
+        <div class="brand-name">Under Armour Japan</div>
+        <div class="tags">
+          <span class="tag cat-fitness">FITNESS</span>
+          <span class="tag country">JAPAN</span>
+        </div>
+      </div>
+    </div>
+    <div class="card-desc">日本向けアスリートコンテンツ。日本語コンテンツの作り方・アスリート起用の参考に。</div>
+    <div class="card-links">
+      <a class="link-item ig" href="https://www.instagram.com/underarmourjp/" target="_blank">
+        <span class="link-icon">📷</span>
+        <span class="link-text">instagram.com/underarmourjp</span>
+      </a>
+      <a class="link-item web" href="https://www.underarmour.com/ja-jp" target="_blank">
+        <span class="link-icon">🌐</span>
+        <span class="link-text">underarmour.com/ja-jp</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="card fitness" data-cat="fitness" data-country="japan">
+    <div class="card-top">
+      <div>
+        <div class="brand-name">SPARWEAR</div>
+        <div class="tags">
+          <span class="tag cat-fitness">FITNESS</span>
+          <span class="tag country">JAPAN</span>
+        </div>
+      </div>
+    </div>
+    <div class="card-desc">国内フィットネス系で映像クオリティが高い。FITMIに近い規模感で参考にしやすい。</div>
+    <div class="card-links">
+      <a class="link-item ig" href="https://www.instagram.com/sparwear_official/" target="_blank">
+        <span class="link-icon">📷</span>
+        <span class="link-text">instagram.com/sparwear_official</span>
+      </a>
+      <a class="link-item web" href="https://www.sparwear.jp" target="_blank">
+        <span class="link-icon">🌐</span>
+        <span class="link-text">sparwear.jp</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="card fitness" data-cat="fitness" data-country="japan">
+    <div class="card-top">
+      <div>
+        <div class="brand-name">C3fit</div>
+        <div class="tags">
+          <span class="tag cat-fitness">FITNESS</span>
+          <span class="tag country">JAPAN</span>
+        </div>
+      </div>
+    </div>
+    <div class="card-desc">機能性×デザイン。日本人体型に合わせた見せ方が参考になる。</div>
+    <div class="card-links">
+      <a class="link-item ig" href="https://www.instagram.com/c3fit_official/" target="_blank">
+        <span class="link-icon">📷</span>
+        <span class="link-text">instagram.com/c3fit_official</span>
+      </a>
+      <a class="link-item web" href="https://www.c3fit.jp" target="_blank">
+        <span class="link-icon">🌐</span>
+        <span class="link-text">c3fit.jp</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="card street mine" data-cat="street" data-country="japan" data-mine="true">
+    <div class="card-top">
+      <div>
+        <div class="brand-name">That's life</div>
+        <div class="tags">
+          <span class="tag cat-street">STREET</span>
+          <span class="tag country">JAPAN</span>
+          <span class="tag mine-badge">担当</span>
+        </div>
+      </div>
+    </div>
+    <div class="card-desc">担当ブランド。ストリート系アパレル。撮影・SNS運用を担当。</div>
+    <div class="card-links">
+      <a class="link-item ig" href="https://www.instagram.com/thatslife.jp/" target="_blank">
+        <span class="link-icon">📷</span>
+        <span class="link-text">instagram.com/thatslife.jp</span>
+      </a>
+      <a class="link-item web" href="https://thatslife.jp" target="_blank">
+        <span class="link-icon">🌐</span>
+        <span class="link-text">thatslife.jp</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="card street mine" data-cat="street" data-country="japan" data-mine="true">
+    <div class="card-top">
+      <div>
+        <div class="brand-name">belvet</div>
+        <div class="tags">
+          <span class="tag cat-street">STREET</span>
+          <span class="tag country">JAPAN</span>
+          <span class="tag mine-badge">担当</span>
+        </div>
+      </div>
+    </div>
+    <div class="card-desc">担当ブランド。ストリート系アパレル。撮影・SNS運用を担当。</div>
+    <div class="card-links">
+      <a class="link-item ig" href="https://www.instagram.com/belvet.jp/" target="_blank">
+        <span class="link-icon">📷</span>
+        <span class="link-text">instagram.com/belvet.jp</span>
+      </a>
+      <a class="link-item web" href="https://belvet.jp" target="_blank">
+        <span class="link-icon">🌐</span>
+        <span class="link-text">belvet.jp</span>
+      </a>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  function filter(type) {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    event.target.classList.add('active');
+
+    document.querySelectorAll('.card').forEach(card => {
+      if (type === 'all') {
+        card.classList.remove('hidden');
+      } else if (type === 'fitness') {
+        card.dataset.cat === 'fitness' ? card.classList.remove('hidden') : card.classList.add('hidden');
+      } else if (type === 'street') {
+        card.dataset.cat === 'street' ? card.classList.remove('hidden') : card.classList.add('hidden');
+      } else if (type === 'japan') {
+        card.dataset.country === 'japan' ? card.classList.remove('hidden') : card.classList.add('hidden');
+      } else if (type === 'mine') {
+        card.dataset.mine === 'true' ? card.classList.remove('hidden') : card.classList.add('hidden');
+      }
+    });
+  }
+</script>
+
+</body>
+</html>
