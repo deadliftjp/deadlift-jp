@@ -1142,9 +1142,10 @@ footer{
       <div class="gi-ov"><h3>Aston Martin DBX</h3><p>Photo · 2025</p></div>
     </div>
 
-    <div class="gi" data-cat="film" style="overflow:hidden;display:flex;align-items:center;justify-content:center;background:#111;">
-      <iframe width="100%" height="100%" src="https://www.youtube.com/embed/LMZC1yc41-o" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="position:absolute;inset:0;width:100%;height:100%;"></iframe>
+    <div class="gi" data-cat="film" onclick="window.open('https://www.youtube.com/watch?v=LMZC1yc41-o','_blank')">
+      <div class="gi-bg" style="background:url('https://img.youtube.com/vi/LMZC1yc41-o/maxresdefault.jpg') center/cover no-repeat"></div>
       <div class="gi-num">052</div>
+      <div class="gi-ov"><h3>Aston Martin Vantage S</h3><p>Film · YouTube</p></div>
     </div>
 
     <div class="gi" data-cat="porsche">
@@ -1169,6 +1170,11 @@ footer{
       <div class="gi-bg ph53"></div>
       <div class="gi-num">056</div>
       <div class="gi-ov"><h3>Photo</h3><p>2025</p></div>
+    </div>
+
+    <div class="gi" data-cat="film" onclick="window.open('https://www.instagram.com/reel/DacqUJpvnRE/','_blank')" style="background:linear-gradient(135deg,#1a0a2e 0%,#2d1b4e 50%,#0a0a0a 100%);cursor:pointer;">
+      <div class="gi-num">057</div>
+      <div class="gi-ov"><h3>Porsche 992 GT3 RS</h3><p>Film · Instagram</p></div>
     </div>
 
   </div>
@@ -1262,8 +1268,48 @@ footer{
       <div class="reel-list">
         <div class="reel-item" onclick="window.open('https://www.youtube.com/watch?v=LMZC1yc41-o','_blank')">
           <span class="ri-idx">01</span>
-          <span class="ri-name">Porsche 992 GT3 RS — Kyoto</span>
+          <span class="ri-name">Aston Martin Vantage S</span>
           <span class="ri-arr">→</span>
+        </div>
+        <div class="reel-item" onclick="window.open('https://www.instagram.com/reel/DacqUJpvnRE/','_blank')">
+          <span class="ri-idx">02</span>
+          <span class="ri-name">Porsche 992 GT3 RS</span>
+          <span class="ri-arr">→</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-top:3rem;display:grid;grid-template-columns:1fr 1fr;gap:1.5rem">
+    <div>
+      <p style="font-size:.62rem;letter-spacing:.3em;text-transform:uppercase;color:var(--g);margin-bottom:1rem;">Featured Film 01</p>
+      <div class="reel" onclick="window.open('https://www.youtube.com/watch?v=LMZC1yc41-o','_blank')">
+        <div class="reel-bg" style="background:url('https://img.youtube.com/vi/LMZC1yc41-o/maxresdefault.jpg') center/cover no-repeat"></div>
+        <div class="reel-scanlines"></div>
+        <div class="reel-play">
+          <div class="play-ring">
+            <svg viewBox="0 0 24 24" width="18"><polygon points="5,3 19,12 5,21"/></svg>
+          </div>
+        </div>
+        <div class="reel-meta">
+          <span class="reel-title">Aston Martin Vantage S</span>
+          <span class="reel-dur">YouTube</span>
+        </div>
+      </div>
+    </div>
+    <div>
+      <p style="font-size:.62rem;letter-spacing:.3em;text-transform:uppercase;color:var(--g);margin-bottom:1rem;">Featured Film 02</p>
+      <div class="reel" onclick="window.open('https://www.instagram.com/reel/DacqUJpvnRE/','_blank')">
+        <div class="reel-bg" style="background:linear-gradient(135deg,#1a0a2e 0%,#2d1b4e 50%,#0a0a0a 100%)"></div>
+        <div class="reel-scanlines"></div>
+        <div class="reel-play">
+          <div class="play-ring">
+            <svg viewBox="0 0 24 24" width="18"><polygon points="5,3 19,12 5,21"/></svg>
+          </div>
+        </div>
+        <div class="reel-meta">
+          <span class="reel-title">Porsche 992 GT3 RS</span>
+          <span class="reel-dur">Instagram</span>
         </div>
       </div>
     </div>
